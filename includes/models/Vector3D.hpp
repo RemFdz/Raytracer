@@ -11,6 +11,10 @@ namespace RTX::Math {
     public:
         Vector3D() = default;
         Vector3D(double x, double y, double z) : _x(x), _y(y), _z(z) {};
+
+        [[nodiscard]] double getX() const { return _x; }
+        [[nodiscard]] double getY() const { return _y; }
+        [[nodiscard]] double getZ() const { return _z; }
     private:
         double _x = 0;
         double _y = 0;
