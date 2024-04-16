@@ -1,0 +1,11 @@
+# IDEA Related
+.idea/
+.vscode/
+
+# Compilation
+*.o
+*.a
+vgcore*
+
+# Binary
+raytracer
