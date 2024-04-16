@@ -9,3 +9,6 @@ vgcore*
 
 # Binary
 raytracer
+/build/
+/cmake-build-debug/
+/CMakeFiles/
