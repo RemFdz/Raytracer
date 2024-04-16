@@ -5,7 +5,7 @@
 ** Vector3D Model
 */
 
-namespace RTX::Math {
+namespace Math {
     class Vector3D {
 
     public:
@@ -15,6 +15,8 @@ namespace RTX::Math {
         [[nodiscard]] double getX() const { return _x; }
         [[nodiscard]] double getY() const { return _y; }
         [[nodiscard]] double getZ() const { return _z; }
+
+
     private:
         double _x = 0;
         double _y = 0;
