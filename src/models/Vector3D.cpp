@@ -53,3 +53,8 @@ Math::Vector3D operator*=(Math::Vector3D &a, double const &b)
     a = a * b;
     return a;
 }
+
+Math::Vector3D Math::Vector3D::scalarProduct(Math::Vector3D const &a, Math::Vector3D const &b)
+{
+    return {a.getX() * b.getX(), a.getY() * b.getY(), a.getZ() * b.getZ()};
+}
