@@ -5,7 +5,7 @@
 ** Vector3D Model
 */
 
-#include "math/Vector3D.hpp"
+#include "Vector3D.hpp"
 
 /*
  * Operators overloading

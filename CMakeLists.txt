@@ -9,5 +9,9 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 set(EXECUTABLE_OUTPUT_PATH ../.)
 add_executable(raytracer ${SOURCES}
-        includes/math/Point3D.hpp)
+        src/math/point3d/Point3D.hpp
+        src/objects/IObject3D.hpp
+        src/ray/Ray3D.hpp
+        src/objects/shapes/sphere/Sphere.hpp
+        src/objects/shapes/sphere/Sphere.cpp)
 target_include_directories(raytracer PUBLIC includes)
