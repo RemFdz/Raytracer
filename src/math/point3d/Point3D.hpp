@@ -16,6 +16,10 @@ namespace Math {
         [[nodiscard]] double getY() const { return _y; }
         [[nodiscard]] double getZ() const { return _z; }
 
+        inline Point3D operator+(const Vector3D& v) const {
+            return {_x + v.getX(), _y + v.getY(), _z + v.getZ()};
+        }
+
     private:
         double _x = 0;
         double _y = 0;

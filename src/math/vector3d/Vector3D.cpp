@@ -54,10 +54,13 @@ Math::Vector3D operator*=(Math::Vector3D &a, double const &b)
     return a;
 }
 
-/*
- * Public methods
- */
 Math::Vector3D Math::Vector3D::scalarProduct(Math::Vector3D const &a, Math::Vector3D const &b)
 {
     return {a.getX() * b.getX(), a.getY() * b.getY(), a.getZ() * b.getZ()};
 }
+
+Math::Vector3D Math::Vector3D::operator*(double &k) {
+    return {_x * k, _y * k, _z * k};
+}
+
+
