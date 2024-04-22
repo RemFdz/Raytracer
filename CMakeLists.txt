@@ -13,5 +13,6 @@ add_executable(raytracer ${SOURCES}
         src/objects/IObject3D.hpp
         src/ray/Ray3D.hpp
         src/objects/shapes/sphere/Sphere.hpp
-        src/objects/shapes/sphere/Sphere.cpp)
+        src/objects/shapes/sphere/Sphere.cpp
+        src/display/DIsplay.hpp)
 target_include_directories(raytracer PUBLIC includes)
