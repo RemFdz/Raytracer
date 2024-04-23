@@ -19,7 +19,9 @@ int main(int argc, char **argv)
         std::cerr << "Invalid arguments. Usage: " << argv[0] << " [-sfml | path_to_config.cfg]" << std::endl;
         return 1;
     }
-    Rtx::Scene<256,256> scene(16 / 9);
+    Rtx::Camera camera(1, 2, Math::Vec3(0, 0, 0), 256, 256);
+    Rtx::Scene<256,256> scene(16 / 9, camera);
+    scene.generateImage();
     //Core core;
     //core.run(argv[1]);
 }

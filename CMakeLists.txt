@@ -12,13 +12,15 @@ set(EXECUTABLE_OUTPUT_PATH ../.)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -Werror")
 add_executable(raytracer ${SOURCES}
         src/objects/IObject3D.hpp
-        src/ray/Ray3D.hpp
+        src/graphics/ray/Ray3D.hpp
         src/objects/shapes/sphere/Sphere.hpp
         src/objects/shapes/sphere/Sphere.cpp
         src/display/DIsplay.hpp
         src/core/Core.cpp
         src/graphics/color/Color.hpp
         src/graphics/scene/Scene.hpp
-        src/graphics/camera/Camera.cpp)
+        src/graphics/camera/Camera.cpp
+        src/graphics/ray/Ray3D.cpp
+        src/graphics/scene/Scene.tpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)

@@ -5,6 +5,7 @@
 ** Vector3D Model
 */
 
+#pragma once
 #include <cmath>
 #include "iostream"
 
@@ -18,23 +19,19 @@ namespace Math {
         [[nodiscard]] inline double x() const { return _x; }
         [[nodiscard]] inline double y() const { return _y; }
         [[nodiscard]] inline double z() const { return _z; }
-        [[nodiscard]] inline double dot(const Vector3D &v) const {return _x * v._x + _y * v._y + _z * v._z;}
-
-        inline Vector3D operator*(double &v) const
-            {return {_x * v, _y * v, _z * v};};
 
         inline Vector3D operator-() const {return {-_x, -_y, -_z};};
 
-        inline Vector3D operator+=(Vector3D const &v) const
+        inline Vector3D operator+=(const Vector3D &v) const
             {return {_x + v._x, _y + v._y, _z + v._z};};
 
         inline Vector3D operator *= (double const &v) const
             {return {_x * v, _y * v, _z * v};};
 
-        inline Vector3D operator/=(Vector3D const &v) const
+        inline Vector3D operator/=(const Vector3D &v) const
             {return {_x / v._x, _y / v._y, _z / v._z};};
 
-        inline Vector3D operator+(const Vector3D & v) const {
+        inline Vector3D operator+(const Vector3D &v) const {
             return {_x + v._x, _y + v._y, _z + v._z};
         }
 
@@ -50,36 +47,34 @@ namespace Math {
             return {_x * t, _y * t, _z * t};
         }
 
-        inline Vector3D operator/(double t) {
+        inline Vector3D operator/(double t) const {
             return {_x / t, _y / t, _z / t};
         }
 
-        inline double dot(const Vector3D& v) {
+        [[nodiscard]] inline double dot(const Vector3D& v) const {
             return _x * v._x + _y * v._y + _z * v._z;
         }
 
-        inline Vector3D cross(const Vector3D& v) {
+        [[nodiscard]] inline Vector3D cross(const Vector3D& v) const {
             return {_y * v._z - _z * v._y,
                     _z * v._x - _x * v._z,
                     _x * v._y - _x * v._z};
         }
 
-        inline Vector3D unitVector() {
+        [[nodiscard]] inline Vector3D unitVector() const {
             return *this / this->length();
         }
 
-        inline double lengthSquared() const
+        [[nodiscard]] inline double lengthSquared() const
         {return _x * _x + _y * _y + _z * _z;};
 
-        inline double length() const {return sqrt(lengthSquared());};
-
-
-        Vector3D scalarProduct(Vector3D const &a, Vector3D const &b);
+        [[nodiscard]] inline double length() const {return sqrt(lengthSquared());};
 
         inline std::ostream &operator<<(std::ostream& out) {
             return out << _x << ' ' << _y << ' ' << _z;
         }
 
+        [[nodiscard]] inline Vector3D unit_vector() const {return *this / length();}
     protected:
         double _x = 0;
         double _y = 0;

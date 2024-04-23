@@ -8,11 +8,14 @@
 #pragma once
 #include <array>
 #include "../color/Color.hpp"
+#include "../ray/Ray3D.hpp"
+#include "../camera/Camera.hpp"
+
 namespace Rtx {
     template<int Width, int Height>
     class Scene {
     public:
-        explicit Scene(double aspectRatio);
+        explicit Scene(double aspectRatio, Camera camera);
 
         ~Scene() = default;
 
@@ -23,37 +26,8 @@ namespace Rtx {
         int _height;
         double _aspectRatio = 16 / 9;
         std::array<std::array<Color, Width>, Height> _pixels;
+        Camera _camera;
     };
-
-    template<int Width, int Height>
-    Scene<Width, Height>::Scene(double aspectRatio) : _aspectRatio(
-        aspectRatio) {
-        _width = Width;
-        _height = Width / _aspectRatio;
-        if (_height < 1)
-            _height = 1;
-        for (auto &row: _pixels) {
-            row.fill(Color(0, 0, 0));
-        }
-    }
-
-    template<int Width, int Height>
-    void Scene<Width, Height>::generateImage() {
-        Color pixel_color;
-        std::cout << "P3\n" << _width << ' ' << _height << "\n255\n";
-        for (int j = 0; j < _height; j++) {
-            std::clog << "\rScanlines remaining: " << (_height - j) << ' ' <<
-                      std::flush;
-            for (int i = 0; i < _width; i++) {
-                pixel_color = Color(
-                    double(i) / (_width - 1),
-                    double(j) / (_height - 1),
-                    0
-                );
-                _pixels[j][i] = pixel_color;
-                pixel_color.write_color(std::cout);
-            }
-        }
-        std::clog << "\rDone.\n";
-    }
 }
+
+#include "Scene.tpp"

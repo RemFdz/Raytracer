@@ -7,8 +7,9 @@
 
 #pragma once
 
-#include "../ray/Ray3D.hpp"
-#include "../math/vector3d/Vector3D.hpp"
+#include "Ray3D.hpp"
+#include "../../math/vector3d/Vector3D.hpp"
+#include "../color/Color.hpp"
 
 namespace Rtx {
     class Ray3D {
@@ -27,8 +28,11 @@ namespace Rtx {
         [[nodiscard]] inline Math::Point3 at(float t) const {
             return _origin + _direction * t;
         }
+
+        Color color();
     private:
         Math::Point3 _origin;
         Math::Vec3 _direction;
     };
+
 }

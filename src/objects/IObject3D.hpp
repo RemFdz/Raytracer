@@ -5,7 +5,8 @@
 ** IObject interface
 */
 
-#include "../ray/Ray3D.hpp"
+#include "../graphics/ray/Ray3D.hpp"
+
 namespace Rtx {
     class IObject3D {
     public:

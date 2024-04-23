@@ -7,6 +7,7 @@
 
 #pragma once
 #include "../../math/vector3d/Vector3D.hpp"
+#include "../ray/Ray3D.hpp"
 
 namespace Rtx {
     class Camera {
@@ -20,10 +21,15 @@ namespace Rtx {
             int sceneHeight
         );
 
+        Ray3D castRay(int x, int y);
+
     private:
         double _focalLength;
         double _viewportHeight;
         double _viewportWidth;
         Math::Vec3 _cameraCenter;
+
+        int _sceneWidth{};
+        int _sceneHeight{};
     };
 }

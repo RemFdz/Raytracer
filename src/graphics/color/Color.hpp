@@ -17,7 +17,8 @@ namespace Rtx {
         Color(double r, double g, double b) : Math::Vector3D(r, g, b) {
         };
 
-        explicit Color(const Math::Vector3D &v) : Math::Vector3D(v) {
+        Color(const Math::Vector3D &v) : Math::Vector3D(v) {
+
         };
 
         ~Color() = default;
@@ -34,15 +35,6 @@ namespace Rtx {
             return z();
         }
 
-        void write_color(std::ostream &out) {
-            double r = _x;
-            double g = _y;
-            double b = _z;
-            int rByte = int(255.999 * r);
-            int gByte = int(255.999 * g);
-            int bByte = int(255.999 * b);
-
-            out << rByte << ' ' << gByte << ' ' << bByte << '\n';
-        }
+        void write_color(std::ostream &out);
     };
 }
