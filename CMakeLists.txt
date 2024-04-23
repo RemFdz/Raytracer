@@ -18,6 +18,7 @@ add_executable(raytracer ${SOURCES}
         src/display/DIsplay.hpp
         src/core/Core.cpp
         src/graphics/color/Color.hpp
-        src/graphics/image/Image.hpp)
+        src/graphics/scene/Scene.hpp
+        src/graphics/camera/Camera.cpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)

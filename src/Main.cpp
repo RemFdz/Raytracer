@@ -11,7 +11,7 @@
 
 #include "display/DIsplay.hpp"
 #include "core/Core.hpp"
-#include "graphics/image/Image.hpp"
+#include "graphics/scene/Scene.hpp"
 
 int main(int argc, char **argv)
 {
@@ -19,8 +19,7 @@ int main(int argc, char **argv)
         std::cerr << "Invalid arguments. Usage: " << argv[0] << " [-sfml | path_to_config.cfg]" << std::endl;
         return 1;
     }
-    Image<256, 256> image(16 / 9);
-    image.generateImage();
+    Rtx::Scene<256,256> scene(16 / 9);
     //Core core;
     //core.run(argv[1]);
 }
