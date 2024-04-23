@@ -13,16 +13,19 @@
 namespace Rtx {
     class Ray3D {
     public:
-        Ray3D(Math::Vec3 origin, Math::Vec3 direction) : _origin(origin),
+        Ray3D(Math::Point3 origin, Math::Vec3 direction) : _origin(origin),
         _direction(direction) {};
 
         [[nodiscard]] inline Math::Vec3 getOrigin() const { return _origin; };
         [[nodiscard]] inline Math::Vec3 getDirection() const {return _direction;};
-
-        inline void setOrigin(Math::Vec3 origin) {_origin = origin;};
+        inline void setOrigin(Math::Point3 origin) {_origin = origin;};
         inline void setDirection(Math::Vec3 direction) {_direction = direction;};
+
+        [[nodiscard]] inline Math::Point3 at(float t) const {
+            return _origin + _direction * t;
+        }
     private:
-        Math::Vec3 _origin;
+        Math::Point3 _origin;
         Math::Vec3 _direction;
     };
 }
