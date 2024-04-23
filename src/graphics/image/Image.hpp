@@ -26,7 +26,8 @@ template<int Width, int Height>
 Image<Width, Height>::Image(double aspectRatio) : _aspectRatio(aspectRatio) {
     _width = Width;
     _height = Width / _aspectRatio;
-
+    if (_height < 1)
+        _height = 1;
     for (auto &row : _pixels) {
         row.fill(Color(0, 0, 0));
     }
