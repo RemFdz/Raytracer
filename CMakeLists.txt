@@ -17,6 +17,7 @@ add_executable(raytracer ${SOURCES}
         src/objects/shapes/sphere/Sphere.hpp
         src/objects/shapes/sphere/Sphere.cpp
         src/display/DIsplay.hpp
-        src/core/Core.cpp)
+        src/core/Core.cpp
+        src/imageGenerator/ImageGenerator.cpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)
