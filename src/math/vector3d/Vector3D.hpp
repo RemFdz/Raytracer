@@ -80,7 +80,7 @@ namespace Math {
             return out << _x << ' ' << _y << ' ' << _z;
         }
 
-    private:
+    protected:
         double _x = 0;
         double _y = 0;
         double _z = 0;
