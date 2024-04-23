@@ -10,9 +10,9 @@
 
 bool Sphere::hit(const Rtx::Ray3D &ray, float &t) {
     Math::Vector3D oc = Math::Vector3D(
-        _center.getX() - ray.getOrigin().getX(),
-        _center.getY() - ray.getOrigin().getY(),
-        _center.getZ() - ray.getOrigin().getZ()
+        _center.x() - ray.getOrigin().x(),
+        _center.y() - ray.getOrigin().y(),
+        _center.z() - ray.getOrigin().z()
     );
     double a = ray.getDirection().dot(ray.getDirection());
     double b = 2.0 * oc.dot(ray.getDirection());

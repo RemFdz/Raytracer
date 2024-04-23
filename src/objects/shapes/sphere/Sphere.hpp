@@ -11,9 +11,10 @@
 
 class Sphere: public Rtx::IObject3D {
     public:
-        Sphere(Math::Point3D center, double radius) : _center(center), _radius(radius) {};
+        Sphere(Math::Vec3 center, double radius) : _center(center), _radius
+        (radius) {};
         bool hit(const Rtx::Ray3D &ray, float &t) override;
     private:
-        Math::Point3D _center;
+        Math::Vec3 _center;
         double _radius;
 };

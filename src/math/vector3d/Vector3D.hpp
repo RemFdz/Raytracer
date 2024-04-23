@@ -11,9 +11,6 @@
 namespace Math {
 
     class Vector3D {
-        using Vec3 = Vector3D;
-        using Point3D = Vector3D;
-        using Point3 = Vector3D;
     public:
         Vector3D() = default;
         Vector3D(double x, double y, double z) : _x(x), _y(y), _z(z) {};
@@ -88,4 +85,7 @@ namespace Math {
         double _y = 0;
         double _z = 0;
     };
+    using Vec3 = Vector3D;
+    using Point3D = Vector3D;
+    using Point3 = Vector3D;
 }
