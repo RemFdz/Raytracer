@@ -16,8 +16,11 @@ namespace Rtx {
         Ray3D(Math::Point3 origin, Math::Vec3 direction) : _origin(origin),
         _direction(direction) {};
 
-        [[nodiscard]] inline Math::Vec3 getOrigin() const { return _origin; };
-        [[nodiscard]] inline Math::Vec3 getDirection() const {return _direction;};
+        [[nodiscard]] inline const Math::Vec3 &getOrigin() const { return
+        _origin;};
+        [[nodiscard]] inline const Math::Vec3 &getDirection() const {return
+        _direction;};
+
         inline void setOrigin(Math::Point3 origin) {_origin = origin;};
         inline void setDirection(Math::Vec3 direction) {_direction = direction;};
 

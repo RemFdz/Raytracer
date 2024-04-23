@@ -11,7 +11,7 @@
 
 #include "display/DIsplay.hpp"
 #include "core/Core.hpp"
-#include "imageGenerator/ImageGenerator.hpp"
+#include "graphics/image/Image.hpp"
 
 int main(int argc, char **argv)
 {
@@ -19,7 +19,8 @@ int main(int argc, char **argv)
         std::cerr << "Invalid arguments. Usage: " << argv[0] << " [-sfml | path_to_config.cfg]" << std::endl;
         return 1;
     }
-    RTX::ImageGenerator::generateImage(256, 256);
+    Image<256, 256> image(16 / 9);
+    image.generateImage();
     //Core core;
     //core.run(argv[1]);
 }
