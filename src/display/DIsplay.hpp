@@ -10,12 +10,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include "../graphics/scene/Scene.hpp"
 
 class WindowDisplay {
     public:
-        WindowDisplay() :
+        WindowDisplay(int width, int height) : width(width), height(height),
             window(sf::VideoMode(width, height), "Raytracer", sf::Style::Default) {
             window.setVerticalSyncEnabled(true);
+            texture = sf::Texture();
+            texture.create(width, height);
+            sprite = sf::Sprite(texture);
         }
 
         inline bool isOpen() const { return window.isOpen(); }
@@ -24,10 +28,20 @@ class WindowDisplay {
 
         inline void clear(const sf::Color& color = sf::Color::Black) { window.clear(color); }
 
-        inline void display() { window.display(); }
+        inline void updateTexture(std::vector<sf::Uint8> &pixels) {
+            texture.update(pixels.data());
+            sprite.setTexture(texture, true);
+        }
+
+        inline void display() {
+            window.draw(sprite);
+            window.display();
+        }
 
     private:
         sf::RenderWindow window;
+        sf::Texture texture;
+        sf::Sprite sprite;
         int width = 1920;
         int height = 1080;
 };

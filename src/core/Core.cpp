@@ -20,7 +20,7 @@ bool Core::validateArguments(int argc, char **argv) {
 
 void Core::run(const std::string& arg) {
     if (arg == "-sfml") {
-        WindowDisplay display;
+        WindowDisplay display(800, 600);
         while (display.isOpen()) {
             display.handleEvents();
             display.clear();

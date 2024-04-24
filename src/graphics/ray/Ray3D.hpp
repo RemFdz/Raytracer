@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "Ray3D.hpp"
 #include "../../math/vector3d/Vector3D.hpp"
+#include "../../objects/IObject3D.hpp"
 #include "../color/Color.hpp"
 
 namespace Rtx {
@@ -31,7 +31,7 @@ namespace Rtx {
 
         Math::Vec3 at(double t);
 
-        Color color(double t);
+        Color color(IObject3D &object);
     private:
         Math::Point3 _origin;
         Math::Vec3 _direction;

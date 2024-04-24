@@ -7,15 +7,30 @@
 
 #include "Sphere.hpp"
 
-double Sphere::hit(const Rtx::Ray3D &ray) {
+bool Sphere::hit(const Rtx::Ray3D &ray, HitData_T &hitData, double tMin,
+                 double tMax) {
     Math::Vector3D oc = _center - ray.getOrigin();
-    double a = ray.getDirection().dot(ray.getDirection());
-    double b = -2.0 * oc.dot(ray.getDirection());
-    double c = oc.dot(oc) - _radius * _radius;
-    double discriminant = b * b - 4 * a * c;
+    double a = ray.getDirection().lengthSquared();
+    double half_b = oc.dot(ray.getDirection());
+    double c = oc.lengthSquared() - _radius * _radius;
+    double discriminant = half_b * half_b - a * c;
+    double sqrtd = 0;
+    double root = 0;
 
     if (discriminant < 0)
-        return -1.0;
-    else
-        return (-b - sqrt(discriminant) ) / (2.0 * a);
+        return false;
+
+    sqrtd = sqrt(discriminant);
+    root = (-half_b - sqrtd) / a;
+
+    if (root <= tMin || tMax <= root) {
+        root = (half_b + sqrtd) / a;
+        if (root <= tMin || tMax <= root)
+            return false;
+    }
+    hitData.distanceFromOrigin = root;
+    hitData.position = ray.at(root);
+    hitData.normal = (hitData.position - _center) / _radius;
+
+    return true;
 }

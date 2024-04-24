@@ -22,11 +22,15 @@ namespace Rtx {
 
         void generateImage();
 
+        void fillSfUint8Pixels();
+
+        inline std::vector<sf::Uint8> &getPixels() { return _pixels; }
+
     private:
         int _width;
         int _height;
         double _aspectRatio = 16 / 9;
-        std::array<std::array<Color, Width>, Height> _pixels;
+        std::vector<sf::Uint8> _pixels;
         Camera _camera;
     };
 }

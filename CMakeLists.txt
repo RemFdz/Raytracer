@@ -21,6 +21,7 @@ add_executable(raytracer ${SOURCES}
         src/graphics/scene/Scene.hpp
         src/graphics/camera/Camera.cpp
         src/graphics/ray/Ray3D.cpp
-        src/graphics/scene/Scene.tpp)
+        src/graphics/scene/Scene.tpp
+        src/models/HitData.hpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)

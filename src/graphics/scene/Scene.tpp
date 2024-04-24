@@ -18,9 +18,8 @@ namespace Rtx {
         if (_height < 1)
             _height = 1;
 
-        for (auto &row: _pixels) {
-            row.fill(Color(0, 0, 0));
-        }
+        _pixels.clear();
+        _pixels.reserve(Width * Height * 4);
     }
 
     template<int Width, int Height>
@@ -34,12 +33,28 @@ namespace Rtx {
                       std::flush;
             for (int i = 0; i < _width; i++) {
                 Ray3D ray = _camera.castRay(i, j);
-                double t = sphere.hit(ray);
-                pixel_color = ray.color(t);
-                _pixels[j][i] = pixel_color;
+                pixel_color = ray.color(sphere);
                 pixel_color.write_color(std::cout);
             }
         }
         std::clog << "\rDone.\n";
+    }
+
+    template<int Width, int Height>
+    void Scene<Width, Height>::fillSfUint8Pixels() {
+        Color pixel_color;
+        Sphere sphere(Math::Vec3(0, 0, -1), 0.5);
+
+        for (int j = 0; j < _height; j++) {
+            for (int i = 0; i < _width; i++) {
+                Ray3D ray = _camera.castRay(i, j);
+                pixel_color = ray.color(sphere);
+                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.r() * 255.999));
+                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.g() * 255.999));
+                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.b() * 255.999));
+                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.a() *
+                    255.999));
+            }
+        }
     }
 }

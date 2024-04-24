@@ -11,14 +11,16 @@ namespace Rtx {
         return _origin + _direction * t;
     }
 
-    Color Rtx::Ray3D::color(double t) {
+    Color Rtx::Ray3D::color(IObject3D &object) {
         Color color;
         Math::Vec3 unit_direction;
+        HitData_T hitData;
         double a = 0;
+        object.hit(*this, hitData, 0.0, 1000.0);
+        double t = hitData.distanceFromOrigin;
 
         if (t > 0.0) {
-            unit_direction = Math::Vec3(this->at(t) - Math::Vec3
-                (0, 0, -1)).unitVector();
+            unit_direction = Math::Vec3(this->at(t) - object.getCenter()).unitVector();
             color = Color(unit_direction.x()+1, unit_direction.y()+1,
                 unit_direction.z()+1);
             return color * 0.5;
