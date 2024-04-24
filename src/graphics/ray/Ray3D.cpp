@@ -12,7 +12,7 @@ namespace Rtx {
         auto a = 0.5 * (unit_direction.y() + 1.0);
         Color color = Math::Vec3(1.0, 1.0, 1.0) * (1.0 - a)
                     + Math::Vec3(0.5, 0.7, 1.0) * a;
-
+        
         return color;
     }
 }

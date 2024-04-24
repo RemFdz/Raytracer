@@ -10,6 +10,7 @@
 #include "../color/Color.hpp"
 #include "../ray/Ray3D.hpp"
 #include "../camera/Camera.hpp"
+#include "../../objects/shapes/sphere/Sphere.hpp"
 
 namespace Rtx {
     template<int Width, int Height>

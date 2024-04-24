@@ -15,7 +15,13 @@ namespace Rtx {
         Color() = default;
 
         Color(double r, double g, double b) : Math::Vector3D(r, g, b) {
+            _a = 255;
         };
+
+        Color(double r, double g, double b, double a) :
+        Math::Vector3D(r, g, b), _a(a) {
+        };
+
 
         Color(const Math::Vector3D &v) : Math::Vector3D(v) {
 
@@ -35,6 +41,13 @@ namespace Rtx {
             return z();
         }
 
+        [[nodiscard]] inline double a() const {
+            return _a;
+        }
+
         void write_color(std::ostream &out);
+
+    private:
+        double _a;
     };
 }
