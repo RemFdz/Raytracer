@@ -29,7 +29,9 @@ namespace Rtx {
             return _origin + _direction * t;
         }
 
-        Color color();
+        Math::Vec3 at(double t);
+
+        Color color(double t);
     private:
         Math::Point3 _origin;
         Math::Vec3 _direction;

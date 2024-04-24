@@ -34,9 +34,8 @@ namespace Rtx {
                       std::flush;
             for (int i = 0; i < _width; i++) {
                 Ray3D ray = _camera.castRay(i, j);
-                pixel_color = ray.color();
-                if (sphere.hit(ray))
-                    pixel_color = Color(50, 50, 0);
+                double t = sphere.hit(ray);
+                pixel_color = ray.color(t);
                 _pixels[j][i] = pixel_color;
                 pixel_color.write_color(std::cout);
             }

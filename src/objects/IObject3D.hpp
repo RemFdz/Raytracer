@@ -10,7 +10,7 @@
 namespace Rtx {
     class IObject3D {
     public:
-        virtual bool hit(const Ray3D &ray) = 0;
+        virtual double hit(const Ray3D &ray) = 0;
     private:
     };
 }

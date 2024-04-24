@@ -13,7 +13,7 @@ class Sphere: public Rtx::IObject3D {
     public:
         Sphere(Math::Vec3 center, double radius) : _center(center), _radius
         (radius) {};
-        bool hit(const Rtx::Ray3D &ray) override;
+        double hit(const Rtx::Ray3D &ray) override;
     private:
         Math::Vec3 _center;
         double _radius;
