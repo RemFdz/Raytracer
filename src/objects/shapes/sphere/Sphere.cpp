@@ -7,7 +7,7 @@
 
 #include "Sphere.hpp"
 
-bool Sphere::hit(const Rtx::Ray3D &ray, HitData_T &hitData, double tMin,
+bool Sphere::hit(const Rtx::Ray3D &ray, HitData_t &hitData, double tMin,
                  double tMax) {
     Math::Vector3D oc = _center - ray.getOrigin();
     double a = ray.getDirection().lengthSquared();

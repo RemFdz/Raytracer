@@ -14,16 +14,18 @@ namespace Rtx {
     Color Rtx::Ray3D::color(IObject3D &object) {
         Color color;
         Math::Vec3 unit_direction;
-        HitData_T hitData;
+        HitData_t hitData;
         double a = 0;
-        object.hit(*this, hitData, 0.0, 1000.0);
-        double t = hitData.distanceFromOrigin;
 
-        if (t > 0.0) {
-            unit_direction = Math::Vec3(this->at(t) - object.getCenter()).unitVector();
-            color = Color(unit_direction.x()+1, unit_direction.y()+1,
-                unit_direction.z()+1);
-            return color * 0.5;
+        if (object.hit(*this, hitData, 0, 1000)) {
+            double t = hitData.distanceFromOrigin;
+
+            if (t > 0.0) {
+                unit_direction = Math::Vec3(this->at(t) - object.getCenter()).unitVector();
+                color = Color(unit_direction.x()+1, unit_direction.y()+1,
+                    unit_direction.z()+1);
+                return color * 0.5;
+            }
         }
         unit_direction = Math::Vec3(_direction).unitVector();
         a = 0.5 * (unit_direction.y() + 1.0);

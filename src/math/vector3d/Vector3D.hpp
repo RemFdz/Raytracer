@@ -22,8 +22,8 @@ namespace Math {
 
         inline Vector3D operator-() const {return {-_x, -_y, -_z};};
 
-        inline Vector3D operator+=(const Vector3D &v) const
-            {return {_x + v._x, _y + v._y, _z + v._z};};
+        inline void operator+=(const Vector3D &v)
+            {_x += v._x; _y += v._y; _z += v._z;};
 
         inline Vector3D operator *= (double const &v) const
             {return {_x * v, _y * v, _z * v};};

@@ -13,5 +13,19 @@ void WindowDisplay::handleEvents() {
         if (event.type == sf::Event::Closed) {
             window.close();
         }
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) {
+                _keyPressed = RIGHT;
+            }
+            if (event.key.code == sf::Keyboard::Left) {
+                _keyPressed = LEFT;
+            }
+            if (event.key.code == sf::Keyboard::Up) {
+                _keyPressed = UP;
+            }
+            if (event.key.code == sf::Keyboard::Down) {
+                _keyPressed = DOWN;
+            }
+        }
     }
 }

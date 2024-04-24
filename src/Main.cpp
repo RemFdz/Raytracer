@@ -21,21 +21,35 @@ int main(int argc, char **argv)
         return 1;
     }*/
 
-    Rtx::Camera camera(1, 2, Math::Vec3(0, 0, 0), 256, 256);
-    Rtx::Scene<256,256> scene(16 / 9, camera);
+    const int width = 800;
+    const int height = 600;
+
+    Rtx::Camera camera(1, 2, Math::Vec3(0, 0, 0), width, height);
+    Rtx::Scene<width,height> scene(16 / 9, camera);
 
     if (argc == 1)
         scene.generateImage();
     else {
-        WindowDisplay display(256, 256);
+        WindowDisplay display(width, height);
         scene.fillSfUint8Pixels();
         std::vector<sf::Uint8> pixels = scene.getPixels();
-
         display.updateTexture(pixels);
         while (display.isOpen()) {
-            display.handleEvents();
             display.clear();
-            display.updateTexture(pixels);
+            display.handleEvents();
+            if (display.getKeyPressed() != NONE) {
+                if (display.getKeyPressed() == LEFT)
+                    scene._camera.move(Math::Vec3(0.05, 0, 0));
+                if (display.getKeyPressed() == RIGHT)
+                    scene._camera.move(Math::Vec3(-0.05, 0, 0));
+                if (display.getKeyPressed() == UP)
+                    scene._camera.move(Math::Vec3(0, 0, -0.05));
+                if (display.getKeyPressed() == DOWN)
+                    scene._camera.move(Math::Vec3(0, 0, 0.05));
+                scene.fillSfUint8Pixels();
+                pixels = scene.getPixels();
+                display.updateTexture(pixels);
+            }
             display.display();
         }
     }

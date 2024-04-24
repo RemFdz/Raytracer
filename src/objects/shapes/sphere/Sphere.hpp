@@ -18,7 +18,7 @@ class Sphere: public Rtx::IObject3D {
                 radius = 0;
         };
 
-        bool hit(const Rtx::Ray3D &ray, HitData_T &hitData, double t_min,
+        bool hit(const Rtx::Ray3D &ray, HitData_t &hitData, double t_min,
                  double t_max) override;
 
         inline Math::Vec3 getCenter() override { return _center; };

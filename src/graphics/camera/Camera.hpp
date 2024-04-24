@@ -23,13 +23,15 @@ namespace Rtx {
 
         Ray3D castRay(int x, int y);
 
+        inline void move(Math::Vec3 direction) {
+            _cameraCenter += direction;};
+        inline Math::Vec3 &getCenter() { return _cameraCenter; };
     private:
         double _focalLength;
         double _viewportHeight;
         double _viewportWidth;
         Math::Vec3 _cameraCenter;
-
-        int _sceneWidth{};
-        int _sceneHeight{};
+        int _sceneWidth = 0;
+        int _sceneHeight = 0;
     };
 }

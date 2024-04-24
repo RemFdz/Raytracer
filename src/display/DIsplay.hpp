@@ -12,6 +12,16 @@
 #include <SFML/System.hpp>
 #include "../graphics/scene/Scene.hpp"
 
+typedef enum {
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    ZOOM_IN,
+    ZOOM_OUT,
+    NONE
+} KeyPressed_e;
+
 class WindowDisplay {
     public:
         WindowDisplay(int width, int height) : width(width), height(height),
@@ -36,7 +46,10 @@ class WindowDisplay {
         inline void display() {
             window.draw(sprite);
             window.display();
+            _keyPressed = NONE;
         }
+
+        inline KeyPressed_e getKeyPressed() { return _keyPressed;};
 
     private:
         sf::RenderWindow window;
@@ -44,4 +57,5 @@ class WindowDisplay {
         sf::Sprite sprite;
         int width = 1920;
         int height = 1080;
+        KeyPressed_e _keyPressed = NONE;
 };

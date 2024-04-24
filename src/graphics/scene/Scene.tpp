@@ -45,6 +45,9 @@ namespace Rtx {
         Color pixel_color;
         Sphere sphere(Math::Vec3(0, 0, -1), 0.5);
 
+        this->_pixels.clear();
+        this->_pixels.reserve(Width * Height * 4);
+
         for (int j = 0; j < _height; j++) {
             for (int i = 0; i < _width; i++) {
                 Ray3D ray = _camera.castRay(i, j);

@@ -16,6 +16,7 @@ namespace Rtx {
     template<int Width, int Height>
     class Scene {
     public:
+        Camera _camera;
         explicit Scene(double aspectRatio, Camera camera);
 
         ~Scene() = default;
@@ -31,7 +32,6 @@ namespace Rtx {
         int _height;
         double _aspectRatio = 16 / 9;
         std::vector<sf::Uint8> _pixels;
-        Camera _camera;
     };
 }
 
