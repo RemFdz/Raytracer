@@ -12,4 +12,5 @@ typedef struct HitData_s {
     double distanceFromOrigin = 0.0;
     Math::Vec3 position;
     Math::Vec3 normal;
+    bool front_face;
 } HitData_t;
