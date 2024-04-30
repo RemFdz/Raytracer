@@ -31,7 +31,7 @@ namespace Rtx {
 
             inline std::vector<sf::Uint8> &getPixels() { return _pixels; }
 
-            inline void add_object(std::shared_ptr<IObject3D> obj) { _objects.push_back(obj); }
+            inline void add_object(auto obj) { _objects.push_back(obj); }
 
         private:
             int _width;

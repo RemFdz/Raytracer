@@ -13,35 +13,25 @@ namespace Rtx {
     }
 
     Color Rtx::Ray3D::color(std::vector<std::shared_ptr<Rtx::IObject3D>> &objects) {
-        Color color;
-        Math::Vec3 unit_direction;
-        HitData_t hitData;
-        double a = 0;
-
-        double best_distance = 0.0;
-        Math::Vector3D color_tmp;
+        Math::Vector3D best_normal;
+        double best_distance = std::numeric_limits<double>::infinity();
+        Color best_color;
 
         for (const auto& object : objects) {
-            if (object->hit(*this, hitData, 0, 1000)) {
-                double t = hitData.distanceFromOrigin;
-                if (best_distance == 0.0 || best_distance > t) {
-                    if (t > 0.0) {
-                        unit_direction = Math::Vec3(this->at(t) - object
-                            ->getCenter()).unitVector();
-                        color = Color(unit_direction.x()+1, unit_direction.y()+1,
-                            unit_direction.z()+1);
-                        best_distance = t;
-                        color_tmp = color * 0.5;
-                    }
-                }
+            HitData_t hitData;
+            if (object->hit(*this, hitData, 0.001, best_distance)) {
+                best_distance = hitData.distanceFromOrigin;
+                best_normal = Math::Vec3(this->at(hitData.distanceFromOrigin) - object->getCenter()).unitVector();
+                best_color = Color(best_normal.x() + 1, best_normal.y() + 1, best_normal.z() + 1) * 0.5;
             }
         }
-        if (best_distance != 0.0)
-                return color_tmp;
-        unit_direction = Math::Vec3(_direction).unitVector();
-        a = 0.5 * (unit_direction.y() + 1.0);
-        color = Math::Vec3(1.0, 1.0, 1.0) * (1.0 - a)
-                    + Math::Vec3(0.5, 0.7, 1.0) * a;
-        return color;
+
+        if (best_distance == std::numeric_limits<double>::infinity()) {
+            Math::Vector3D unit_direction = _direction.unitVector();
+            double t = 0.5 * (unit_direction.y() + 1.0);
+            best_color = Math::Vec3(1.0, 1.0, 1.0) * (1.0 - t) + Math::Vec3(0.5, 0.7, 1.0) * t;
+        }
+        return best_color;
     }
+
 }

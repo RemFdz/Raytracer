@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <limits>
 #include <memory>
 
 #include "../../math/vector3d/Vector3D.hpp"

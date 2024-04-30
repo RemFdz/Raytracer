@@ -48,6 +48,8 @@ namespace Rtx {
         add_object(std::make_shared<Sphere>(sphere_1));
         Sphere sphere_2(Math::Vec3(0, 1, -4), 0.5);
         add_object(std::make_shared<Sphere>(sphere_2));
+        Sphere sphere_3(Math::Vec3(0, -100.5, -1), 100);
+        add_object(std::make_shared<Sphere>(sphere_3));
 
         this->_pixels.clear();
         this->_pixels.reserve(Width * Height * 4);
