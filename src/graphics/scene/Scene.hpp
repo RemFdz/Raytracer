@@ -9,11 +9,14 @@
 
 #include <array>
 #include <memory>
+#include <thread>
+#include <vector>
 
 #include "../color/Color.hpp"
 #include "../ray/Ray3D.hpp"
 #include "../camera/Camera.hpp"
 #include "../../objects/shapes/sphere/Sphere.hpp"
+#include "../../thread/Multi_Thread.hpp"
 
 namespace Rtx {
     template<int Width, int Height>
