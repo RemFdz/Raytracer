@@ -9,7 +9,6 @@
 
 #include <limits>
 #include <memory>
-
 #include "../../math/vector3d/Vector3D.hpp"
 #include "../../objects/IObject3D.hpp"
 #include "../color/Color.hpp"

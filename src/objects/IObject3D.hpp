@@ -9,6 +9,7 @@
 
 #include "../math/vector3d/Vector3D.hpp"
 #include "../models/HitData.hpp"
+#include "../utils/range/Range.hpp"
 
 namespace Rtx {
     class Ray3D;
