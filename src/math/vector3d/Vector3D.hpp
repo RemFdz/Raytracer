@@ -8,6 +8,7 @@
 #pragma once
 #include <cmath>
 #include "iostream"
+#include "../../utils/randomizer/Randomizer.hpp"
 
 namespace Math {
 
@@ -75,6 +76,36 @@ namespace Math {
         }
 
         [[nodiscard]] inline Vector3D unit_vector() const {return *this / length();}
+
+        static inline Vector3D random() { return {Randomizer::getRandomDouble(), Randomizer::getRandomDouble(),
+                                                  Randomizer::getRandomDouble()}; }
+
+        static Vector3D random(double min, double max) {
+            return { Randomizer::getRandomDouble(min,max), Randomizer::getRandomDouble(min,max),
+                     Randomizer::getRandomDouble(min,max) };
+        }
+
+        static inline Vector3D random_in_unit_sphere() {
+            while (true) {
+                auto p = Vector3D::random(-1,1);
+                if (p.lengthSquared() < 1)
+                    return p;
+            }
+        }
+
+        static inline Vector3D random_unit_vector() {
+            return Vector3D::random_in_unit_sphere().unitVector();
+        }
+
+        static inline Vector3D random_on_hemisphere(const Vector3D& normal) {
+            Vector3D on_unit_sphere = random_unit_vector();
+            if (on_unit_sphere.dot(normal) > 0.0)
+                return on_unit_sphere;
+            else
+                return -on_unit_sphere;
+        }
+
+
     protected:
         double _x = 0;
         double _y = 0;
