@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2024
-** raytracer
-** File description:
-** Ray3D
-*/
-
 #include "Ray3D.hpp"
 
 namespace Rtx {
@@ -12,26 +5,40 @@ namespace Rtx {
         return _origin + _direction * t;
     }
 
-    Color Rtx::Ray3D::color(std::vector<std::shared_ptr<Rtx::IObject3D>> &objects) {
-        Math::Vector3D best_normal;
-        double best_distance = std::numeric_limits<double>::infinity();
+
+    // Corrected color method in Ray3D.cpp
+    Color Ray3D::color(std::vector<std::shared_ptr<IObject3D>>& objects, int depth) {
+        if (depth <= 0) {
+            return Color(); // Return some base case color, e.g., background color
+        }
+
+        HitData_t hitData;
         Color best_color;
+        bool hit_anything = false;
+        double closest_so_far = std::numeric_limits<double>::infinity();
 
         for (const auto& object : objects) {
-            HitData_t hitData;
-            if (object->hit(*this, hitData, 0.001, best_distance)) {
-                best_distance = hitData.distanceFromOrigin;
-                best_normal = Math::Vec3(this->at(hitData.distanceFromOrigin) - object->getCenter()).unitVector();
-                best_color = Color(best_normal.x() + 1, best_normal.y() + 1, best_normal.z() + 1) * 0.5;
+            if (object->hit(*this, hitData, 0.001, closest_so_far)) {
+                std::cout << "Hit at distance: " << hitData.distanceFromOrigin << std::endl;
+                hit_anything = true;
+                closest_so_far = hitData.distanceFromOrigin;
+                // Use the hit normal to generate a direction on the hemisphere
+                Math::Vector3D target = hitData.position + hitData.normal +
+                                        Math::random_on_hemisphere(hitData.normal); // Correctly pass the normal vector
+                Ray3D bounced_ray(hitData.position, target - hitData.position);
+                best_color = 0.5 * bounced_ray.color(objects, depth - 1); // Recursive call
+                std::cout << "Color after hit: (" << best_color.x() << ", " << best_color.y() << ", " << best_color.z() << ")" << std::endl;
             }
         }
 
-        if (best_distance == std::numeric_limits<double>::infinity()) {
+        if (!hit_anything) {
             Math::Vector3D unit_direction = _direction.unitVector();
             double t = 0.5 * (unit_direction.y() + 1.0);
-            best_color = Math::Vec3(1.0, 1.0, 1.0) * (1.0 - t) + Math::Vec3(0.5, 0.7, 1.0) * t;
+            return (1.0 - t) * Color(1.0, 1.0, 1.0) + t * Color(0.5, 0.7, 1.0); // Correct the namespace if needed
+            std::cout << "Background color: (" << best_color.x() << ", " << best_color.y() << ", " << best_color.z() << ")" << std::endl;
         }
+        best_color.applyGammaCorrection(2.2);
+
         return best_color;
     }
-
 }

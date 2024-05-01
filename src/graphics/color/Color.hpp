@@ -46,6 +46,20 @@ namespace Rtx {
             return _a;
         }
 
+        Color operator*(double scalar) const {
+            return Color(x() * scalar, y() * scalar, z() * scalar);
+        }
+
+        // You might also need to define the addition operator if not already defined
+        Color operator+(const Color& other) const {
+            return Color(x() + other.x(), y() + other.y(), z() + other.z());
+        }
+
+        // Static method to multiply a scalar by a Color
+        friend Color operator*(double scalar, const Color& color) {
+            return color * scalar;
+        }
+
         void write_color(std::ostream &out);
 
     private:

@@ -40,7 +40,7 @@ namespace Rtx {
                 std::flush;
             for (int i = 0; i < _width; i++) {
                 Ray3D ray = _camera.castRay(i, j);
-                pixel_color = ray.color(_objects);
+                pixel_color = ray.color(_objects, 6);
                 pixel_color.write_color(std::cout);
             }
         }
@@ -59,7 +59,7 @@ namespace Rtx {
             for (int j = start_row; j < end_row; j++) {
                 for (int i = 0; i < _width; i++) {
                     Ray3D ray = _camera.castRay(i, j);
-                    Color pixel_color = ray.color(_objects);
+                    Color pixel_color = ray.color(_objects, 4);
                     size_t pixel_index = (j * _width + i) * 4;
                     _pixels[pixel_index] = static_cast<sf::Uint8>(pixel_color.r() * 255.999);
                     _pixels[pixel_index + 1] = static_cast<sf::Uint8>(pixel_color.g() * 255.999);

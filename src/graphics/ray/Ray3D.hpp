@@ -34,7 +34,8 @@ namespace Rtx {
 
         Math::Vec3 at(double t);
 
-        Color color(std::vector<std::shared_ptr<Rtx::IObject3D>> &object);
+        Color color(std::vector<std::shared_ptr<IObject3D>>& objects, int depth);
+
 
     private:
         Math::Point3 _origin;
