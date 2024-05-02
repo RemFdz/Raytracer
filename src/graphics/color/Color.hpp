@@ -21,7 +21,7 @@ namespace Rtx {
         };
 
         Color(double r, double g, double b, double a) :
-        Math::Vector3D(r, g, b), _a(a) {
+            Math::Vector3D(r, g, b), _a(a) {
         };
 
         Color(const Math::Vector3D &v) : Math::Vector3D(v) {

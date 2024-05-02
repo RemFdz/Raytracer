@@ -61,14 +61,14 @@ namespace Math {
                     _x * v._y - _x * v._z};
         }
 
-        [[nodiscard]] inline Vector3D unitVector() const {
-            return *this / this->length();
-        }
-
         [[nodiscard]] inline double lengthSquared() const
         {return _x * _x + _y * _y + _z * _z;};
 
         [[nodiscard]] inline double length() const {return sqrt(lengthSquared());};
+
+        [[nodiscard]] inline Vector3D unitVector() const {
+            return *this / this->length();
+        }
 
         inline std::ostream &operator<<(std::ostream& out) {
             return out << _x << ' ' << _y << ' ' << _z;

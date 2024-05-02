@@ -21,7 +21,7 @@ bool Sphere::hit(const Rtx::Ray3D &ray, HitData_t &hitData, double tMin,
         return false;
 
     sqrtd = sqrt(discriminant);
-    root = (-half_b - sqrtd) / a;
+    root = (half_b - sqrtd) / a;
 
     if (root <= tMin || tMax <= root) {
         root = (half_b + sqrtd) / a;

@@ -21,9 +21,10 @@ namespace Rtx {
             double t = hitData.distanceFromOrigin;
 
             if (t > 0.0) {
-                unit_direction = Math::Vec3(this->at(t) - object.getCenter()).unitVector();
-                color = Color(unit_direction.x()+1, unit_direction.y()+1,
-                    unit_direction.z()+1);
+                Math::Vec3 vec = at(t) - Math::Vec3(0, 0, -1);
+                unit_direction = vec.unitVector();
+                color = Color(unit_direction.x() + 1, unit_direction.y() + 1,
+                    unit_direction.z() + 1);
                 return color * 0.5;
             }
         }
