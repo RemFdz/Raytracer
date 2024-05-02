@@ -15,10 +15,10 @@ void WindowDisplay::handleEvents() {
         }
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Right) {
-                _keyPressed = RIGHT;
+                _keyPressed = LEFT;
             }
             if (event.key.code == sf::Keyboard::Left) {
-                _keyPressed = LEFT;
+                _keyPressed = RIGHT;
             }
             if (event.key.code == sf::Keyboard::Up) {
                 _keyPressed = UP;

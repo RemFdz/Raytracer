@@ -42,7 +42,7 @@ namespace Rtx {
             double _aspectRatio = 16 / 9;
             std::vector<sf::Uint8> _pixels;
             std::vector<std::shared_ptr<IObject3D>> _objects;
-            int samplePerPixels = 10;
+            int samplePerPixels = 100;
             double pixelSampleScale = 0;
 
             void calculatePixelColor(int i, int j);

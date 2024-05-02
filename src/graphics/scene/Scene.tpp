@@ -20,10 +20,10 @@ namespace Rtx {
 
         _pixels.clear();
         _pixels.reserve(Width * Height * 4);
-        Sphere sphere_1(Math::Vec3(0, 0, -1), 0.5);
-        add_object(std::make_shared<Sphere>(sphere_1));
         Sphere sphere_2(Math::Vec3(0, 1, -4), 0.5);
         add_object(std::make_shared<Sphere>(sphere_2));
+        Sphere sphere_1(Math::Vec3(0, 0, -1), 0.5);
+        add_object(std::make_shared<Sphere>(sphere_1));
         Sphere sphere_3(Math::Vec3(0, -100.5, -1), 100);
         add_object(std::make_shared<Sphere>(sphere_3));
         this->pixelSampleScale = 1.0 / this->samplePerPixels;
@@ -75,7 +75,7 @@ namespace Rtx {
             pixel_color += ray.color(_objects);
         }
         pixel_color = pixel_color / this->samplePerPixels;
-        //pixel_color *= this->pixelSampleScale;
+        pixel_color *= this->pixelSampleScale;
         size_t pixel_index = (j * _width + i) * 4;
         _pixels[pixel_index] = static_cast<sf::Uint8>(pixel_color.r() * 256);
         _pixels[pixel_index + 1] = static_cast<sf::Uint8>(pixel_color.g() * 256);

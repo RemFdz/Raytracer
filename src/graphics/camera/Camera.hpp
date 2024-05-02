@@ -37,7 +37,7 @@ namespace Rtx {
         int _sceneHeight = 0; // height of the scene
 
         [[nodiscard]] inline Math::Vec3 getRandomSamplePoint() const {
-            return { Utils::Randomizer::randomDouble() - 0.5, Utils::Randomizer::randomDouble() - 0.5, 0 };
+            return { Utils::Randomizer::getRandomDouble() - 0.5, Utils::Randomizer::getRandomDouble() - 0.5, 0 };
         }
     };
 }

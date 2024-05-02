@@ -13,12 +13,12 @@
 namespace Utils {
     class Randomizer {
     public:
-        static inline double randomDouble() {
+        static inline double getRandomDouble() {
             return rand() / (RAND_MAX + 1.0);
         }
 
-        static inline double randomDouble(double min, double max) {
-            return min + (max - min) * randomDouble();
+        static inline double getRandomDouble(double min, double max) {
+            return min + (max - min) * getRandomDouble();
         }
     };
 }
