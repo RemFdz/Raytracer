@@ -10,7 +10,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
-#include "../graphics/scene/Scene.hpp"
 
 typedef enum {
     LEFT,
@@ -22,9 +21,9 @@ typedef enum {
     NONE
 } KeyPressed_e;
 
-class WindowDisplay {
+class SfmlDisplay {
     public:
-        WindowDisplay(int width, int height) : width(width), height(height),
+        SfmlDisplay(int width, int height) : width(width), height(height),
             window(sf::VideoMode(width, height), "Raytracer", sf::Style::Default) {
             window.setVerticalSyncEnabled(true);
             texture = sf::Texture();

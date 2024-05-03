@@ -10,29 +10,16 @@
 #include "../color/Color.hpp"
 #include "../ray/Ray3D.hpp"
 #include "../camera/Camera.hpp"
-#include "../../objects/shapes/sphere/Sphere.hpp"
+#include "../../objects/IObject3D.hpp"
 
 namespace Rtx {
-    template<int Width, int Height>
     class Scene {
     public:
         Camera _camera;
-        explicit Scene(double aspectRatio, Camera camera);
-
+        explicit Scene(Camera &camera);
         ~Scene() = default;
-
-        void generateImage();
-
-        void fillSfUint8Pixels();
-
-        inline std::vector<sf::Uint8> &getPixels() { return _pixels; }
+        void render();
 
     private:
-        int _width;
-        int _height;
-        double _aspectRatio = 16 / 9;
-        std::vector<sf::Uint8> _pixels;
     };
 }
-
-#include "Scene.tpp"

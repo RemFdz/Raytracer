@@ -11,7 +11,7 @@
 #include <fstream>
 #include <string>
 
-#include "../display/DIsplay.hpp"
+#include "../display/SfmlDisplay.hpp"
 
 class Core {
     public:

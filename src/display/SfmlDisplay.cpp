@@ -5,10 +5,11 @@
 ** Display class used to render objects in a window using sfml
 */
 
-#include "DIsplay.hpp"
+#include "SfmlDisplay.hpp"
 
-void WindowDisplay::handleEvents() {
-    sf::Event event;
+void SfmlDisplay::handleEvents() {
+    sf::Event event {};
+
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             window.close();

@@ -9,9 +9,10 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
-#include "display/DIsplay.hpp"
+#include "display/SfmlDisplay.hpp"
 #include "core/Core.hpp"
 #include "graphics/scene/Scene.hpp"
+#include "models/RenderMode.hpp"
 
 int main(int argc, char **argv)
 {
@@ -22,37 +23,11 @@ int main(int argc, char **argv)
     }*/
 
     const int width = 800;
-    const int height = 600;
 
-    Rtx::Camera camera(1, 2, Math::Vec3(0, 0, 0), width, height);
-    Rtx::Scene<width,height> scene(16 / 9, camera);
+    Rtx::Camera camera(1, 2, Math::Vec3(0, 0, 0), width, Rtx::RenderMode::SFML);
+    Rtx::Scene scene(camera);
 
-    if (argc == 1)
-        scene.generateImage();
-    else {
-        WindowDisplay display(width, height);
-        scene.fillSfUint8Pixels();
-        std::vector<sf::Uint8> pixels = scene.getPixels();
-        display.updateTexture(pixels);
-        while (display.isOpen()) {
-            display.clear();
-            display.handleEvents();
-            if (display.getKeyPressed() != NONE) {
-                if (display.getKeyPressed() == LEFT)
-                    scene._camera.move(Math::Vec3(0.05, 0, 0));
-                if (display.getKeyPressed() == RIGHT)
-                    scene._camera.move(Math::Vec3(-0.05, 0, 0));
-                if (display.getKeyPressed() == UP)
-                    scene._camera.move(Math::Vec3(0, 0, -0.05));
-                if (display.getKeyPressed() == DOWN)
-                    scene._camera.move(Math::Vec3(0, 0, 0.05));
-                scene.fillSfUint8Pixels();
-                pixels = scene.getPixels();
-                display.updateTexture(pixels);
-            }
-            display.display();
-        }
-    }
+    scene.render();
     /// Put the call for generate and display in the core class after
     //Core core;
     //core.run(argv[1]);
