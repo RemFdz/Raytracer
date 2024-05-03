@@ -11,15 +11,18 @@
 #include "../ray/Ray3D.hpp"
 #include "../camera/Camera.hpp"
 #include "../../objects/IObject3D.hpp"
+#include "../../objects/objectlist/ObjectList.hpp"
 
 namespace Rtx {
     class Scene {
     public:
-        Camera _camera;
         explicit Scene(Camera &camera);
         ~Scene() = default;
+        void addObject(const std::shared_ptr<IObject3D> &object);
         void render();
 
     private:
+        ObjectList _objects = {};
+        Camera _camera;
     };
 }

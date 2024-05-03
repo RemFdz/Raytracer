@@ -11,12 +11,14 @@
 #include "../../objects/shapes/sphere/Sphere.hpp"
 #include "../../models/RenderMode.hpp"
 #include "../../display/SfmlDisplay.hpp"
+#include "../../objects/objectlist/ObjectList.hpp"
+
 #include "memory"
 
 namespace Rtx {
+
     class Camera {
     public:
-
         Camera(
             double focalLength,
             double viewportHeight,
@@ -27,17 +29,13 @@ namespace Rtx {
 
         void init();
 
-        Ray3D castRay(int x, int y);
+        Color castRay(int x, int y, ObjectList &objets);
 
-        inline void move(Math::Vec3 direction) {
-            _cameraCenter += direction;};
-        inline Math::Vec3 &getCenter() { return _cameraCenter; };
+        void generateImage(ObjectList &objects);
 
-        void generateImage();
+        void fillUint8Array(ObjectList &objects);
 
-        void fillUint8Array();
-
-        void render();
+        void render(ObjectList &objects);
 
     private:
         double _focalLength;
@@ -53,10 +51,11 @@ namespace Rtx {
 
         Math::Vec3 _viewportU;
         Math::Vec3 _viewportV;
-        Math::Vec3 _pixel_delta_u;
-        Math::Vec3 _pixel_delta_v;
+        Math::Vec3 _pixelDeltaU;
+        Math::Vec3 _pixelDeltaV;
         Math::Vec3 _viewportUpperLeft;
-        Math::Vec3 _pixel00_loc;
+        Math::Vec3 _pixel00Loc;
         Math::Vec3 _direction;
+
     };
 }

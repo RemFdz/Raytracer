@@ -13,6 +13,7 @@
 #include "core/Core.hpp"
 #include "graphics/scene/Scene.hpp"
 #include "models/RenderMode.hpp"
+#include "objects/shapes/sphere/Sphere.hpp"
 
 int main(int argc, char **argv)
 {
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
 
     Rtx::Camera camera(1, 2, Math::Vec3(0, 0, 0), width, Rtx::RenderMode::SFML);
     Rtx::Scene scene(camera);
-
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5));
     scene.render();
     /// Put the call for generate and display in the core class after
     //Core core;

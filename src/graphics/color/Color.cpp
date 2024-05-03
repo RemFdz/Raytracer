@@ -7,7 +7,7 @@
 
 #include "Color.hpp"
 
-void Rtx::Color::write_color(std::ostream &out) {
+void Rtx::Color::writeColor(std::ostream &out) {
     double r = _x;
     double g = _y;
     double b = _z;

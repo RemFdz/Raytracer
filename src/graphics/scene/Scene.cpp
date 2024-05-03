@@ -12,6 +12,10 @@ namespace Rtx {
     }
 
     void Scene::render() {
-        this->_camera.render();
+        this->_camera.render(this->_objects);
+    }
+
+    void Scene::addObject(const std::shared_ptr<IObject3D> &object) {
+        this->_objects.pushBack(object);
     }
 }

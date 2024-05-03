@@ -10,7 +10,8 @@
 #include "../../IObject3D.hpp"
 #include "../../../graphics/ray/Ray3D.hpp"
 
-class Sphere: public Rtx::IObject3D {
+namespace Rtx {
+    class Sphere : public Rtx::IObject3D {
     public:
         Sphere(Math::Vec3 center, double radius) : _center(center), _radius
             (radius) {
@@ -21,9 +22,12 @@ class Sphere: public Rtx::IObject3D {
         bool hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin,
                  double distanceMax) override;
 
-        inline Math::Vec3 getCenter() override { return _center; };
+        inline Math::Vec3 getCenter() {
+            return _center;
+        };
 
     private:
         Math::Vec3 _center;
         double _radius;
-};
+    };
+}

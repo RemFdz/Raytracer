@@ -46,7 +46,7 @@ namespace Rtx {
             return _a;
         }
 
-        void write_color(std::ostream &out);
+        void writeColor(std::ostream &out);
 
     private:
         double _a = 255;

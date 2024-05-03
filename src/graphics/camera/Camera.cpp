@@ -35,56 +35,54 @@ namespace Rtx {
     void Camera::init() {
         this->_viewportU = Math::Vec3(_viewportWidth, 0, 0);
         this->_viewportV = Math::Vec3(0, -_viewportHeight, 0);
-        this->_pixel_delta_u = this->_viewportU / _imageWidth;
-        this->_pixel_delta_v = this->_viewportV / _imageHeight;
+        this->_pixelDeltaU = this->_viewportU / _imageWidth;
+        this->_pixelDeltaV = this->_viewportV / _imageHeight;
         this->_viewportUpperLeft = (_cameraCenter - Math::Vec3(0, 0, _focalLength) - this->_viewportU / 2 - this->_viewportV / 2);
-        this->_pixel00_loc = this->_viewportUpperLeft + ( this->_pixel_delta_v + this->_pixel_delta_u) * 0.5;
-        this->_direction = this->_pixel00_loc - _cameraCenter;
+        this->_pixel00Loc = this->_viewportUpperLeft + ( this->_pixelDeltaV + this->_pixelDeltaU) * 0.5;
+        this->_direction = this->_pixel00Loc - _cameraCenter;
     }
 
-    Ray3D Camera::castRay(int x, int y) {
-        Math::Vec3 pixel_loc = this->_viewportUpperLeft + this->_pixel_delta_u * x + this->_pixel_delta_v * y;
-        Math::Vec3 direction = pixel_loc - _cameraCenter;
+    Color Camera::castRay(int x, int y, ObjectList &objects) {
+        Math::Vec3 pixelCenter = this->_pixel00Loc + this->_pixelDeltaU * x + this->_pixelDeltaV * y;
+        Math::Vec3 direction = pixelCenter - _cameraCenter;
+        Ray3D ray(_cameraCenter, direction);
 
-        return {_cameraCenter, direction};
+        return ray.color(objects);
     }
 
-    void Camera::generateImage() {
-        Color pixel_color;
+    void Camera::generateImage(ObjectList &objects) {
+        Color pixelColor;
         Sphere sphere(Math::Vec3(0, 0, -1), 0.5);
 
         std::cout << "P3\n" << _imageWidth << ' ' << _imageHeight << "\n255\n";
         for (int j = 0; j < _imageHeight; j++) {
-            std::clog << "\rScanlines remaining: " << (_imageHeight - j) << ' ' <<
-                      std::flush;
+            std::clog << "\rScanlines remaining: " << (_imageHeight - j) << ' ' << std::flush;
             for (int i = 0; i < _imageWidth; i++) {
-                Ray3D ray = castRay(i, j);
-                pixel_color = ray.color(sphere);
-                pixel_color.write_color(std::cout);
+                pixelColor = castRay(i, j, objects);
+                pixelColor.writeColor(std::cout);
             }
         }
         std::clog << "\rDone.\n";
     }
 
-    void Camera::fillUint8Array() {
-        Color pixel_color;
+    void Camera::fillUint8Array(ObjectList &objects) {
+        Color pixelColor;
         Sphere sphere(Math::Vec3(0, 0, -1), 0.5);
 
         for (int j = 0; j < _imageHeight; j++) {
             for (int i = 0; i < _imageWidth; i++) {
-                Ray3D ray = castRay(i, j);
-                pixel_color = ray.color(sphere);
-                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.r() * 255.999));
-                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.g() * 255.999));
-                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.b() * 255.999));
-                _pixels.push_back(static_cast<sf::Uint8>(pixel_color.a() * 255.999));
+                pixelColor = castRay(i, j, objects);
+                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.r() * 255.999));
+                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.g() * 255.999));
+                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.b() * 255.999));
+                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.a() * 255.999));
             }
         }
     }
 
-    void Camera::render() {
+    void Camera::render(ObjectList &objects) {
         if (_renderMode == RenderMode::SFML) {
-            fillUint8Array();
+            fillUint8Array(objects);
             _display->updateTexture(_pixels);
             while (_display->isOpen()) {
                 _display->clear();
@@ -92,7 +90,7 @@ namespace Rtx {
                 _display->display();
             }
         } else {
-            generateImage();
+            generateImage(objects);
         }
     }
 }
