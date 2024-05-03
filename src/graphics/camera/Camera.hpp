@@ -55,7 +55,6 @@ namespace Rtx {
         Math::Vec3 _pixelDeltaV;
         Math::Vec3 _viewportUpperLeft;
         Math::Vec3 _pixel00Loc;
-        Math::Vec3 _direction;
 
     };
 } // namespace Rtx

@@ -14,4 +14,4 @@ namespace Rtx {
         Math::Vec3 position;
         Math::Vec3 normal;
     };
-}
+} // namespace Rtx

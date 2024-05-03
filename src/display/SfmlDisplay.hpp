@@ -23,7 +23,7 @@ typedef enum {
 
 class SfmlDisplay {
     public:
-        SfmlDisplay(int width, int height) : width(width), height(height),
+        SfmlDisplay(int width, int height) :
             window(sf::VideoMode(width, height), "Raytracer", sf::Style::Default) {
             window.setVerticalSyncEnabled(true);
             texture = sf::Texture();
@@ -54,7 +54,5 @@ class SfmlDisplay {
         sf::RenderWindow window;
         sf::Texture texture;
         sf::Sprite sprite;
-        int width = 1920;
-        int height = 1080;
         KeyPressed_e _keyPressed = NONE;
 };

@@ -8,8 +8,7 @@
 #include "Sphere.hpp"
 
 namespace Rtx {
-    bool Sphere::hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin,
-                     double distanceMax) {
+    bool Sphere::hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) {
         Math::Vector3D oc = _center - ray.getOrigin();
         double a = ray.getDirection().lengthSquared();
         double half_b = oc.dot(ray.getDirection());
@@ -20,19 +19,16 @@ namespace Rtx {
 
         if (discriminant < 0)
             return false;
-
         sqrtd = sqrt(discriminant);
         root = (half_b - sqrtd) / a;
-
-        if (root <= distanceMin || distanceMax <= root) {
+        if (!range.surrounds(root)) {
             root = (half_b + sqrtd) / a;
-            if (root <= distanceMin || distanceMax <= root)
+            if (!range.surrounds(root))
                 return false;
         }
         hitData.distanceFromOrigin = root;
         hitData.position = ray.at(root);
         hitData.normal = (hitData.position - _center) / _radius;
-
         return true;
     }
 }

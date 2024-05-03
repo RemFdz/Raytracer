@@ -22,7 +22,7 @@ namespace Rtx {
         [[nodiscard]] inline const Math::Vec3 &getDirection() const {return
         _direction;};
 
-        [[nodiscard]] inline Math::Point3 at(float t) const {
+        [[nodiscard]] inline Math::Point3 at(double t) const {
             return _origin + _direction * t;
         }
 

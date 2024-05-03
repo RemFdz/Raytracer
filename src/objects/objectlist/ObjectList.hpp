@@ -17,7 +17,7 @@ namespace Rtx {
 
         inline void pushBack(const std::shared_ptr<IObject3D> &object) { _objects.push_back(object);}
 
-        bool hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin, double distanceMax) override;
+        bool hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) override;
 
     private:
         std::vector<std::shared_ptr<IObject3D>> _objects = {};

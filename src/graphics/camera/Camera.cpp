@@ -39,7 +39,6 @@ namespace Rtx {
         this->_pixelDeltaV = this->_viewportV / _imageHeight;
         this->_viewportUpperLeft = (_cameraCenter - Math::Vec3(0, 0, _focalLength) - this->_viewportU / 2 - this->_viewportV / 2);
         this->_pixel00Loc = this->_viewportUpperLeft + ( this->_pixelDeltaV + this->_pixelDeltaU) * 0.5;
-        this->_direction = this->_pixel00Loc - _cameraCenter;
     }
 
     Color Camera::castRay(int x, int y, ObjectList &objects) {
@@ -52,7 +51,6 @@ namespace Rtx {
 
     void Camera::generateImage(ObjectList &objects) {
         Color pixelColor;
-        Sphere sphere(Math::Vec3(0, 0, -1), 0.5);
 
         std::cout << "P3\n" << _imageWidth << ' ' << _imageHeight << "\n255\n";
         for (int j = 0; j < _imageHeight; j++) {
@@ -67,7 +65,6 @@ namespace Rtx {
 
     void Camera::fillUint8Array(ObjectList &objects) {
         Color pixelColor;
-        Sphere sphere(Math::Vec3(0, 0, -1), 0.5);
 
         for (int j = 0; j < _imageHeight; j++) {
             for (int i = 0; i < _imageWidth; i++) {

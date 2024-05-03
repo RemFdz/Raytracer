@@ -19,8 +19,7 @@ namespace Rtx {
                 radius = 0;
         };
 
-        bool hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin,
-                 double distanceMax) override;
+        bool hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) override;
 
         inline Math::Vec3 getCenter() {
             return _center;

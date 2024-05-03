@@ -29,8 +29,8 @@ int main(int argc, char **argv)
     Rtx::Scene scene(camera);
     scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5));
     scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100));
-    scene.render();
 
+    scene.render();
     /// Put the call for generate and display in the core class after
     //Core core;
     //core.run(argv[1]);

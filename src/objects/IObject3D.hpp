@@ -9,6 +9,7 @@
 
 #include "../math/vector3d/Vector3D.hpp"
 #include "../models/HitData.hpp"
+#include "../utils/Range.hpp"
 
 namespace Rtx {
     class Ray3D;
@@ -16,7 +17,7 @@ namespace Rtx {
     public:
         IObject3D() = default;
         virtual ~IObject3D() = default;
-        virtual bool hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin, double distanceMax) = 0;
+        virtual bool hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) = 0;
     private:
     };
 }

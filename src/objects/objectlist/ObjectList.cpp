@@ -8,14 +8,15 @@
 #include "ObjectList.hpp"
 
 namespace Rtx {
-    bool Rtx::ObjectList::hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin, double distanceMax) {
-        double closestObj = distanceMax;
+    bool Rtx::ObjectList::hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) {
+        double closestObj = range.getMax();
         bool hitted = false;
 
         for (const auto& object : this->_objects) {
-            if (object->hit(ray, hitData, distanceMin, closestObj)) {
+            if (object->hit(ray, hitData, range)) {
                 hitted = true;
                 closestObj = hitData.distanceFromOrigin;
+                range.setMax(closestObj);
             }
         }
         return hitted;
