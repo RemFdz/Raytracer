@@ -5,11 +5,19 @@
 ** IObject interface
 */
 
-#include "../ray/Ray3D.hpp"
+#pragma once
+
+#include "../math/vector3d/Vector3D.hpp"
+#include "../models/HitData.hpp"
+#include "../utils/Range.hpp"
+
 namespace Rtx {
+    class Ray3D;
     class IObject3D {
     public:
-        virtual bool hit(const Ray3D &ray, float &t) = 0;
+        IObject3D() = default;
+        virtual ~IObject3D() = default;
+        virtual bool hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) = 0;
     private:
     };
 }

@@ -6,33 +6,29 @@
 */
 
 #include "Sphere.hpp"
-#include "math.h"
 
-bool Sphere::hit(const Rtx::Ray3D &ray, float &t) {
-    Math::Vector3D oc = Math::Vector3D(
-        _center.getX() - ray.getOrigin().getX(),
-        _center.getY() - ray.getOrigin().getY(),
-        _center.getZ() - ray.getOrigin().getZ()
-    );
-    double a = ray.getDirection().dot(ray.getDirection());
-    double b = 2.0 * oc.dot(ray.getDirection());
-    double c = oc.dot(oc) - _radius * _radius;
-    double discriminant = b * b - 4 * a * c;
+namespace Rtx {
+    bool Sphere::hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) {
+        Math::Vector3D oc = _center - ray.getOrigin();
+        double a = ray.getDirection().lengthSquared();
+        double half_b = oc.dot(ray.getDirection());
+        double c = oc.lengthSquared() - _radius * _radius;
+        double discriminant = half_b * half_b - a * c;
+        double sqrtd = 0;
+        double root = 0;
 
-    if (discriminant < 0) {
-        return false;
-    } else {
-        double sqrtDiscriminant = std::sqrt(discriminant);
-        double t0 = (-b - sqrtDiscriminant) / (2 * a);
-        double t1 = (-b + sqrtDiscriminant) / (2 * a);
-
-        if (t0 > 0 && t0 < t1) {
-            t = t0;
-        } else if (t1 > 0) {
-            t = t1;
-        } else {
+        if (discriminant < 0)
             return false;
+        sqrtd = sqrt(discriminant);
+        root = (half_b - sqrtd) / a;
+        if (!range.surrounds(root)) {
+            root = (half_b + sqrtd) / a;
+            if (!range.surrounds(root))
+                return false;
         }
+        hitData.distanceFromOrigin = root;
+        hitData.position = ray.at(root);
+        hitData.normal = (hitData.position - _center) / _radius;
         return true;
     }
 }
