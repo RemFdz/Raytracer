@@ -16,9 +16,7 @@ namespace Rtx {
     public:
         IObject3D() = default;
         virtual ~IObject3D() = default;
-        virtual bool hit(const Rtx::Ray3D &ray, HitData_t &hitData, double
-        t_min, double t_max)
-            = 0;
+        virtual bool hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin, double distanceMax) = 0;
         virtual inline Math::Vec3 getCenter() = 0;
     private:
     };

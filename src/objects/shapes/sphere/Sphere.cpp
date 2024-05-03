@@ -7,8 +7,8 @@
 
 #include "Sphere.hpp"
 
-bool Sphere::hit(const Rtx::Ray3D &ray, HitData_t &hitData, double tMin,
-                 double tMax) {
+bool Sphere::hit(const Rtx::Ray3D &ray, HitData &hitData, double distanceMin,
+                 double distanceMax) {
     Math::Vector3D oc = _center - ray.getOrigin();
     double a = ray.getDirection().lengthSquared();
     double half_b = oc.dot(ray.getDirection());
@@ -23,9 +23,9 @@ bool Sphere::hit(const Rtx::Ray3D &ray, HitData_t &hitData, double tMin,
     sqrtd = sqrt(discriminant);
     root = (half_b - sqrtd) / a;
 
-    if (root <= tMin || tMax <= root) {
+    if (root <= distanceMin || distanceMax <= root) {
         root = (half_b + sqrtd) / a;
-        if (root <= tMin || tMax <= root)
+        if (root <= distanceMin || distanceMax <= root)
             return false;
     }
     hitData.distanceFromOrigin = root;

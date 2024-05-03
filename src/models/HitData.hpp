@@ -8,8 +8,8 @@
 #pragma once
 #include "../math/vector3d/Vector3D.hpp"
 
-typedef struct HitData_s {
+struct HitData {
     double distanceFromOrigin = 0.0;
     Math::Vec3 position;
     Math::Vec3 normal;
-} HitData_t;
+};
