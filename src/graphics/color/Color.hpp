@@ -51,4 +51,4 @@ namespace Rtx {
     private:
         double _a = 255;
     };
-}
+} // namespace Rtx

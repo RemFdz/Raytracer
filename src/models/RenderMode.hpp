@@ -12,4 +12,4 @@ namespace Rtx {
         SFML,
         IMAGE
     };
-}
+} // namespace Rtx

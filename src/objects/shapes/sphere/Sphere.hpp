@@ -30,4 +30,4 @@ namespace Rtx {
         Math::Vec3 _center;
         double _radius;
     };
-}
+} // namespace Rtx

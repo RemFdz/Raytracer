@@ -22,4 +22,4 @@ namespace Rtx {
     private:
         std::vector<std::shared_ptr<IObject3D>> _objects = {};
     };
-}
+} // namespace Rtx

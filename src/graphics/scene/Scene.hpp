@@ -25,4 +25,4 @@ namespace Rtx {
         ObjectList _objects = {};
         Camera _camera;
     };
-}
+} // namespace Rtx

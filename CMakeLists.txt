@@ -24,6 +24,7 @@ add_executable(raytracer ${SOURCES}
         src/models/HitData.hpp
         src/graphics/scene/Scene.cpp
         src/models/RenderMode.hpp
-        src/objects/objectlist/ObjectList.hpp)
+        src/objects/objectlist/ObjectList.hpp
+        src/utils/Range.hpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)

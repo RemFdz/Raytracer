@@ -33,5 +33,4 @@ namespace Rtx {
         Math::Point3 _origin;
         Math::Vec3 _direction;
     };
-
-}
+} // namespace Rtx

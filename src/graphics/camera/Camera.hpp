@@ -58,4 +58,4 @@ namespace Rtx {
         Math::Vec3 _direction;
 
     };
-}
+} // namespace Rtx

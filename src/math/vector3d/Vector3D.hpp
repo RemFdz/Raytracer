@@ -83,4 +83,4 @@ namespace Math {
     using Vec3 = Vector3D;
     using Point3D = Vector3D;
     using Point3 = Vector3D;
-}
+} // namespace Math
