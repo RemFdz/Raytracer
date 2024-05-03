@@ -48,6 +48,7 @@ namespace Rtx {
         RenderMode _renderMode;
         std::vector<sf::Uint8> _pixels;
         std::shared_ptr<SfmlDisplay> _display;
+        int _samplesPerPixel = 10;
 
         Math::Vec3 _viewportU;
         Math::Vec3 _viewportV;

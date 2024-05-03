@@ -6,6 +6,8 @@
 */
 
 #include "Camera.hpp"
+#include "../../utils/Randomizer.hpp"
+
 namespace Rtx {
     Camera::Camera(
         double focalLength,
@@ -32,6 +34,7 @@ namespace Rtx {
         this->init();
     }
 
+    //TODO: Refactor by not stocking in the class variables who are only used once
     void Camera::init() {
         this->_viewportU = Math::Vec3(_viewportWidth, 0, 0);
         this->_viewportV = Math::Vec3(0, -_viewportHeight, 0);
@@ -42,8 +45,10 @@ namespace Rtx {
     }
 
     Color Camera::castRay(int x, int y, ObjectList &objects) {
-        Math::Vec3 pixelCenter = this->_pixel00Loc + this->_pixelDeltaU * x + this->_pixelDeltaV * y;
-        Math::Vec3 direction = pixelCenter - _cameraCenter;
+        Math::Vec3 offset = Math::Vec3(Utils::Randomizer<double>::getRandom() - 0.5,Utils::Randomizer<double>::getRandom() - 0.5, 0);
+        Math::Vec3 pixelSample = this->_pixel00Loc + this->_pixelDeltaU * (x + offset.x()) + this->_pixelDeltaV * (y
+            + offset.y());
+        Math::Vec3 direction = pixelSample - _cameraCenter;
         Ray3D ray(_cameraCenter, direction);
 
         return ray.color(objects);
@@ -64,15 +69,19 @@ namespace Rtx {
     }
 
     void Camera::fillUint8Array(ObjectList &objects) {
-        Color pixelColor;
+        static Utils::Range<double> range(0.000, 0.999);
 
-        for (int j = 0; j < _imageHeight; j++) {
-            for (int i = 0; i < _imageWidth; i++) {
-                pixelColor = castRay(i, j, objects);
-                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.r() * 255.999));
-                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.g() * 255.999));
-                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.b() * 255.999));
-                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.a() * 255.999));
+        for (int i = 0; i < _imageHeight; i++) {
+            for (int j = 0; j < _imageWidth; j++) {
+                Color pixelColor(0, 0, 0, 255);
+                for (int s = 0; s < _samplesPerPixel; s++) {
+                    pixelColor += castRay(j, i, objects);
+                }
+                pixelColor = pixelColor / _samplesPerPixel;
+                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.r()) * 256));
+                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256));
+                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256));
+                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.a() * 255.99));
             }
         }
     }
