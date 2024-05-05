@@ -33,6 +33,7 @@ namespace Rtx {
         hitData.distanceFromOrigin = root;
         hitData.position = ray.at(root);
         hitData.normal = isFrontFace ? outwardNormal : -outwardNormal;
+        hitData.material = _material;
         return true;
     }
 }

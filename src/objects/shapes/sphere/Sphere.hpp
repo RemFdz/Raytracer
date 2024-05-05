@@ -28,5 +28,6 @@ namespace Rtx {
     private:
         Math::Vec3 _center;
         double _radius;
+        std::shared_ptr<IMaterial> _material = nullptr;
     };
 } // namespace Rtx
