@@ -19,7 +19,6 @@ namespace Utils {
             static std::mt19937 generator(std::random_device{}());
             return std::uniform_real_distribution<T>(0.0, 1.0)(generator);
         }
-
         static inline double getRandom(T min, T max) { return min + (max - min) * getRandom(); }
     };
 }
