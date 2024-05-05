@@ -7,10 +7,11 @@
 
 #pragma once
 #include "../math/vector3d/Vector3D.hpp"
-#include "../graphics/materials/IMaterial.hpp"
 #include <memory>
 
 namespace Rtx {
+    class IMaterial;
+
     struct HitData {
         double distanceFromOrigin = 0.0;
         Math::Vec3 position;

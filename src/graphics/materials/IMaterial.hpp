@@ -6,6 +6,8 @@
 */
 
 #pragma once
+
+#include "../color/Color.hpp"
 #include "../ray/Ray3D.hpp"
 
 namespace Rtx {
