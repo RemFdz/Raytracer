@@ -16,6 +16,8 @@ namespace Rtx {
         double discriminant = half_b * half_b - a * c;
         double sqrtd = 0;
         double root = 0;
+        Math::Vector3D outwardNormal;
+        bool isFrontFace;
 
         if (discriminant < 0)
             return false;
@@ -26,9 +28,11 @@ namespace Rtx {
             if (!range.surrounds(root))
                 return false;
         }
+        outwardNormal = (ray.at(root) - _center) / _radius;
+        isFrontFace = ray.getDirection().dot(outwardNormal) < 0;
         hitData.distanceFromOrigin = root;
         hitData.position = ray.at(root);
-        hitData.normal = (hitData.position - _center) / _radius;
+        hitData.normal = isFrontFace ? outwardNormal : -outwardNormal;
         return true;
     }
 }
