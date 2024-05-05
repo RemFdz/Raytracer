@@ -6,14 +6,20 @@
 */
 
 #pragma once
+
 #include "../../math/vector3d/Vector3D.hpp"
 #include "../ray/Ray3D.hpp"
 #include "../../objects/shapes/sphere/Sphere.hpp"
 #include "../../models/RenderMode.hpp"
 #include "../../display/SfmlDisplay.hpp"
 #include "../../objects/objectlist/ObjectList.hpp"
+#include "../../utils/Range.hpp"
 
 #include "memory"
+#include <mutex>
+#include <thread>
+#include <cmath>
+#include <vector>
 
 namespace Rtx {
 
@@ -48,7 +54,7 @@ namespace Rtx {
         RenderMode _renderMode;
         std::vector<sf::Uint8> _pixels;
         std::shared_ptr<SfmlDisplay> _display;
-        int _samplesPerPixel = 10;
+        int _samplesPerPixel = 500;
 
         Math::Vec3 _viewportU;
         Math::Vec3 _viewportV;

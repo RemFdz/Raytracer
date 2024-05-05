@@ -8,6 +8,8 @@
 #include "Camera.hpp"
 #include "../../utils/Randomizer.hpp"
 
+#include "../../thread/Multi_Thread.hpp"
+
 namespace Rtx {
     Camera::Camera(
         double focalLength,
@@ -68,23 +70,43 @@ namespace Rtx {
         std::clog << "\rDone.\n";
     }
 
-    void Camera::fillUint8Array(ObjectList &objects) {
-        static Utils::Range<double> range(0.000, 0.999);
+   void Camera::fillUint8Array(ObjectList& objects) {
+        int num_threads = std::thread::hardware_concurrency();
+        std::vector<std::thread> threads(num_threads);
+        int total_pixels = _imageWidth * _imageHeight * 4;
+        _pixels.resize(total_pixels);
 
-        for (int i = 0; i < _imageHeight; i++) {
-            for (int j = 0; j < _imageWidth; j++) {
-                Color pixelColor(0, 0, 0, 255);
-                for (int s = 0; s < _samplesPerPixel; s++) {
-                    pixelColor += castRay(j, i, objects);
+        auto render_segment = [&](int index, int start, int end) {
+            Utils::Range<double> local_range(0.000, 0.999);
+            int pixel_index = start * _imageWidth * 4;
+
+            for (int i = start; i < end; i++) {
+                for (int j = 0; j < _imageWidth; j++) {
+                    Color pixelColor(0, 0, 0, 255);
+                    for (int s = 0; s < _samplesPerPixel; s++) {
+                        pixelColor += castRay(j, i, objects);
+                    }
+                    pixelColor = pixelColor / _samplesPerPixel;
+                    _pixels[pixel_index++] = static_cast<sf::Uint8>(local_range.clamp(pixelColor.r()) * 256);
+                    _pixels[pixel_index++] = static_cast<sf::Uint8>(local_range.clamp(pixelColor.g()) * 256);
+                    _pixels[pixel_index++] = static_cast<sf::Uint8>(local_range.clamp(pixelColor.b()) * 256);
+                    _pixels[pixel_index++] = static_cast<sf::Uint8>(pixelColor.a() * 255.99);
                 }
-                pixelColor = pixelColor / _samplesPerPixel;
-                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.r()) * 256));
-                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256));
-                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256));
-                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.a() * 255.99));
             }
+        };
+
+        int segment_height = _imageHeight / num_threads;
+        for (int i = 0; i < num_threads; ++i) {
+            int start = i * segment_height;
+            int end = (i == num_threads - 1) ? _imageHeight : (start + segment_height);
+            threads[i] = std::thread(render_segment, i, start, end);
+        }
+
+        for (auto &thread : threads) {
+            thread.join();
         }
     }
+
 
     void Camera::render(ObjectList &objects) {
         if (_renderMode == RenderMode::SFML) {

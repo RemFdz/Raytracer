@@ -26,6 +26,7 @@ add_executable(raytracer ${SOURCES}
         src/models/RenderMode.hpp
         src/objects/objectlist/ObjectList.hpp
         src/utils/Range.hpp
+        src/thread/Multi_Thread
         src/utils/Randomizer.hpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)
