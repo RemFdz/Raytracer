@@ -46,6 +46,8 @@ namespace Rtx {
             return _a;
         }
 
+        void setLinearToGamma(void);
+
         void writeColor(std::ostream &out);
 
     private:

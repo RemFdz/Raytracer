@@ -17,8 +17,14 @@ namespace Rtx {
         HitData hitData;
         double a = 0;
 
+        if (this->recursionDepthLimit <= 0)
+            return {0, 0, 0};
+
         if (object.hit(*this, hitData, Utils::Range<double>(0.001, infinity))) {
-            return (hitData.normal + Math::Vec3(1.0, 1.0, 1.0)) * 0.5;
+            this->_direction = hitData.normal + Math::Vec3::randomUnitVector();
+            this->_origin = hitData.position;
+            this->recursionDepthLimit--;
+            return this->color(object) * 0.5;
         }
         unit_direction = Math::Vec3(_direction).unitVector();
         a = 0.5 * (unit_direction.y() + 1.0);

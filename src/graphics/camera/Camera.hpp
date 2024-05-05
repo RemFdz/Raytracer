@@ -38,17 +38,19 @@ namespace Rtx {
         void render(ObjectList &objects);
 
     private:
+        double _aspectRatio = 16 / 9;
+        int _samplesPerPixel = 50;
+
         double _focalLength;
         double _viewportHeight;
         double _viewportWidth;
         Math::Vec3 _cameraCenter;
         int _imageWidth = 0;
         int _imageHeight = 0;
-        double _aspectRatio = 16 / 9;
+
         RenderMode _renderMode;
         std::vector<sf::Uint8> _pixels;
         std::shared_ptr<SfmlDisplay> _display;
-        int _samplesPerPixel = 10;
 
         Math::Vec3 _viewportU;
         Math::Vec3 _viewportV;

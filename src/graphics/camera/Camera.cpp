@@ -78,6 +78,7 @@ namespace Rtx {
                     pixelColor += castRay(j, i, objects);
                 }
                 pixelColor = pixelColor / _samplesPerPixel;
+                //pixelColor.setLinearToGamma(); < todo :Check if really needed here
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.r()) * 256));
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256));
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256));
