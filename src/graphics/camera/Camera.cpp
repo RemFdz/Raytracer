@@ -73,12 +73,10 @@ namespace Rtx {
    void Camera::fillUint8Array(ObjectList& objects) {
         int num_threads = std::thread::hardware_concurrency();
         std::vector<std::thread> threads(num_threads);
-        int total_pixels = _imageWidth * _imageHeight * 4;
-        _pixels.resize(total_pixels);
+        std::vector<std::vector<sf::Uint8>> pixels_segments(num_threads);
 
         auto render_segment = [&](int index, int start, int end) {
             Utils::Range<double> local_range(0.000, 0.999);
-            int pixel_index = start * _imageWidth * 4;
 
             for (int i = start; i < end; i++) {
                 for (int j = 0; j < _imageWidth; j++) {
@@ -87,10 +85,10 @@ namespace Rtx {
                         pixelColor += castRay(j, i, objects);
                     }
                     pixelColor = pixelColor / _samplesPerPixel;
-                    _pixels[pixel_index++] = static_cast<sf::Uint8>(local_range.clamp(pixelColor.r()) * 256);
-                    _pixels[pixel_index++] = static_cast<sf::Uint8>(local_range.clamp(pixelColor.g()) * 256);
-                    _pixels[pixel_index++] = static_cast<sf::Uint8>(local_range.clamp(pixelColor.b()) * 256);
-                    _pixels[pixel_index++] = static_cast<sf::Uint8>(pixelColor.a() * 255.99);
+                    pixels_segments[index].push_back(static_cast<sf::Uint8>(local_range.clamp(pixelColor.r()) * 256));
+                    pixels_segments[index].push_back(static_cast<sf::Uint8>(local_range.clamp(pixelColor.g()) * 256));
+                    pixels_segments[index].push_back(static_cast<sf::Uint8>(local_range.clamp(pixelColor.b()) * 256));
+                    pixels_segments[index].push_back(static_cast<sf::Uint8>(pixelColor.a() * 255.99));
                 }
             }
         };
@@ -105,8 +103,12 @@ namespace Rtx {
         for (auto &thread : threads) {
             thread.join();
         }
-    }
 
+        _pixels.clear();
+        for (auto &segment : pixels_segments) {
+            _pixels.insert(_pixels.end(), segment.begin(), segment.end());
+        }
+    }
 
     void Camera::render(ObjectList &objects) {
         if (_renderMode == RenderMode::SFML) {
