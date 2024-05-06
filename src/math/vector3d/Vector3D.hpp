@@ -42,7 +42,7 @@ namespace Math {
         [[nodiscard]] inline double dot(const Vector3D& v) const { return _x * v._x + _y * v._y + _z * v._z; }
 
         [[nodiscard]] inline Vector3D cross(const Vector3D& v) const {
-            return { _y * v._z - _z * v._y, _z * v._x - _x * v._z, _x * v._y - _x * v._z };
+            return { _y * v._z - _z * v._y, _z * v._x - _x * v._z, _x * v._y - _y * v._x };
         }
 
         [[nodiscard]] inline double lengthSquared() const
@@ -53,8 +53,6 @@ namespace Math {
         [[nodiscard]] inline Vector3D unitVector() const { return *this / this->length(); }
 
         inline std::ostream &operator<<(std::ostream& out) const { return out << _x << ' ' << _y << ' ' << _z; }
-
-        [[nodiscard]] inline Vector3D unit_vector() const { return *this / length(); }
 
         [[nodiscard]] static inline Vector3D random() {
             return { Utils::Randomizer<double>::getRandom(), Utils::Randomizer<double>::getRandom(), Utils::Randomizer<double>::getRandom() };
@@ -80,6 +78,19 @@ namespace Math {
 
         [[nodiscard]] inline Vector3D reflect(const Vector3D& normal) const {
             return *this - normal * 2 * this->dot(normal);
+        }
+
+        //operator[]
+        [[nodiscard]] inline double operator[](int i) const {
+            if (i == 0) return _x;
+            if (i == 1) return _y;
+            return _z;
+        }
+
+        [[nodiscard]] inline double &operator[](int i) {
+            if (i == 0) return _x;
+            if (i == 1) return _y;
+            return _z;
         }
 
     protected:

@@ -26,14 +26,19 @@ int main(int argc, char **argv)
         return 1;
     }*/
 
-    const int width = 800;
+    const int width = 1240;
 
-    Rtx::Camera camera(1, 2, Math::Vec3(0, 0.1, 0.6), width, Rtx::RenderMode::SFML);
+    Rtx::Camera camera(Math::Vec3(-2, 2, 1), width, Rtx::RenderMode::SFML);
     Rtx::Scene scene(camera);
+    Rtx::Material::Lambertian materialGreen(Math::Vec3(0.1, 0.8, 0.1));
     Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
     Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
 
     scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5, std::make_shared<Rtx::Material::Lambertian>(material)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, 0), 0.5,
+                                                  std::make_shared<Rtx::Material::Lambertian>(materialGreen)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, 1), 0.5,
+                                                  std::make_shared<Rtx::Material::Lambertian>(materialGreen)));
     scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100, std::make_shared<Rtx::Material::Lambertian>(material)));
     scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
     scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(-1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));

@@ -24,6 +24,7 @@ namespace Rtx {
         if (object.hit(*this, hitData, Utils::Range<double>(0.001, infinity))) {
             Ray3D scattered(hitData.position, Math::Vec3(0, 0, 0));
             Color attenuation;
+
             if (hitData.material && hitData.material->scatter(*this, hitData, attenuation, scattered)) {
                 this->recursionDepthLimit--;
                 scattered.recursionDepthLimit = this->recursionDepthLimit;

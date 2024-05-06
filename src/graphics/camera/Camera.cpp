@@ -7,23 +7,20 @@
 
 #include "Camera.hpp"
 #include "../../utils/Randomizer.hpp"
+#include "../../math/matrix3d/Matrix3D.hpp"
 
 namespace Rtx {
     Camera::Camera(
-        double focalLength,
-        double viewportHeight,
         Math::Vec3 cameraCenter,
         int imageWidth,
         RenderMode renderMode
     ) {
-        this->_focalLength = focalLength;
-        this->_viewportHeight = viewportHeight;
         this->_cameraCenter = cameraCenter;
         this->_imageWidth = imageWidth;
         this->_renderMode = renderMode;
-
         this->_imageHeight = static_cast<int>(_imageWidth / _aspectRatio);
-        this->_viewportWidth = _viewportHeight * (double(_imageWidth) / _imageHeight);
+        if (_imageHeight < 1)
+            _imageHeight = 1;
 
         this->_pixels.clear();
         this->_pixels.reserve(_imageWidth * _imageHeight * 4);
@@ -36,12 +33,26 @@ namespace Rtx {
 
     //TODO: Refactor by not stocking in the class variables who are only used once
     void Camera::init() {
-        this->_viewportU = Math::Vec3(_viewportWidth, 0, 0);
-        this->_viewportV = Math::Vec3(0, -_viewportHeight, 0);
+        double focalLength = (this->_cameraCenter - this->_lookAt).length();
+        double theta = fov * M_PI / 180;
+        double ratio = tan(theta / 2);
+
+        this->_viewportHeight = 2.0 * ratio * focalLength;
+        this->_viewportWidth = _viewportHeight * (double(_imageWidth) / _imageHeight);
+
+        Math::Vec3 w = (this->_cameraCenter - this->_lookAt).unitVector();
+        Math::Vec3 u = this->_upVector.cross(w).unitVector();
+        Math::Vec3 v = w.cross(u);
+
+        this->_viewportU = u * this->_viewportWidth;
+        this->_viewportV = -v * this->_viewportHeight;
+
         this->_pixelDeltaU = this->_viewportU / _imageWidth;
         this->_pixelDeltaV = this->_viewportV / _imageHeight;
-        this->_viewportUpperLeft = (_cameraCenter - Math::Vec3(0, 0, _focalLength) - this->_viewportU / 2 - this->_viewportV / 2);
-        this->_pixel00Loc = this->_viewportUpperLeft + ( this->_pixelDeltaV + this->_pixelDeltaU) * 0.5;
+
+        this->_viewportUpperLeft = _cameraCenter - (w * focalLength) - this->_viewportU / 2 - this->_viewportV
+            / 2;
+        this->_pixel00Loc = this->_viewportUpperLeft + (( this->_pixelDeltaU + this->_pixelDeltaV) * 0.5);
     }
 
     Color Camera::castRay(int x, int y, ObjectList &objects) {
