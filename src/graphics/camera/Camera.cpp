@@ -11,17 +11,18 @@
 namespace Rtx {
     Camera::Camera(
         double focalLength,
-        double viewportHeight,
         Math::Vec3 cameraCenter,
         int imageWidth,
         RenderMode renderMode
     ) {
+        double theta = fov * M_PI / 180;
+        double ratio = tan(theta/2);
+
         this->_focalLength = focalLength;
-        this->_viewportHeight = viewportHeight;
         this->_cameraCenter = cameraCenter;
         this->_imageWidth = imageWidth;
         this->_renderMode = renderMode;
-
+        this->_viewportHeight = 2 * ratio * _focalLength;
         this->_imageHeight = static_cast<int>(_imageWidth / _aspectRatio);
         this->_viewportWidth = _viewportHeight * (double(_imageWidth) / _imageHeight);
 

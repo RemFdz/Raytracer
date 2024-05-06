@@ -21,7 +21,6 @@ namespace Rtx {
     public:
         Camera(
             double focalLength,
-            double viewportHeight,
             Math::Vec3 cameraCenter,
             int imageWidth,
             RenderMode renderMode
@@ -41,6 +40,7 @@ namespace Rtx {
         double _aspectRatio = 16 / 9;
         int _samplesPerPixel = 10;
 
+        double fov = 90;
         double _focalLength;
         double _viewportHeight;
         double _viewportWidth;
