@@ -36,6 +36,6 @@ namespace Rtx {
     private:
         Math::Point3 _origin;
         Math::Vec3 _direction;
-        int recursionDepthLimit = 30;
+        int recursionDepthLimit = 40;
     };
 } // namespace Rtx
