@@ -13,10 +13,9 @@
 namespace Rtx {
     class Sphere : public Rtx::IObject3D {
     public:
-        Sphere(Math::Vec3 center, double radius) : _center(center), _radius
+        Sphere(Math::Vec3 center, double radius, const std::shared_ptr<IMaterial> &material) : _center(center), _radius
             (radius) {
-            if (radius < 0)
-                radius = 0;
+            _material = material;
         };
 
         bool hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) override;
@@ -28,5 +27,6 @@ namespace Rtx {
     private:
         Math::Vec3 _center;
         double _radius;
+        std::shared_ptr<IMaterial> _material = nullptr;
     };
 } // namespace Rtx
