@@ -73,6 +73,11 @@ namespace Math {
 
         [[nodiscard]] static Vector3D randomInHemisphere(const Vector3D& normal);
 
+        [[nodiscard]] inline bool nearZero() const {
+            const auto s = 1e-8;
+            return (fabs(_x) < s) && (fabs(_y) < s) && (fabs(_z) < s);
+        }
+
     protected:
         double _x = 0;
         double _y = 0;
