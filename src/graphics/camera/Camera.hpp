@@ -36,6 +36,12 @@ namespace Rtx {
 
         void render(ObjectList &objects);
 
+        void inline setAspectRatio(double aspectRatio) { _aspectRatio = aspectRatio; }
+
+        void inline setSamplesPerPixel(int samplesPerPixel) { _samplesPerPixel = samplesPerPixel; }
+
+        void inline setFov(double fov) { this->fov = fov; }
+
     private:
         double _aspectRatio = 16 / 9;
         int _samplesPerPixel = 10;
