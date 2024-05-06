@@ -7,7 +7,7 @@
 
 #include "Lambertian.hpp"
 
-bool Rtx::Lambertian::scatter(
+bool Rtx::Material::Lambertian::scatter(
     const Rtx::Ray3D &ray,
     const Rtx::HitData &hitData,
     Rtx::Color &attenuation,
@@ -19,6 +19,6 @@ bool Rtx::Lambertian::scatter(
         direction = hitData.normal;
     }
     scattered = Rtx::Ray3D(hitData.position, direction);
-    attenuation = _albedo;
+    attenuation = _albedoColor;
     return true;
 }

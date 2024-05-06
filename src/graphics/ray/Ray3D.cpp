@@ -5,6 +5,7 @@
 ** Ray3D
 */
 #include "Ray3D.hpp"
+#include "../materials/IMaterial.hpp"
 
 namespace Rtx {
     Math::Vec3 Ray3D::at(double t) {
@@ -21,10 +22,14 @@ namespace Rtx {
             return {0, 0, 0};
 
         if (object.hit(*this, hitData, Utils::Range<double>(0.001, infinity))) {
-            this->_direction = hitData.normal + Math::Vec3::randomUnitVector();
-            this->_origin = hitData.position;
-            this->recursionDepthLimit--;
-            return this->color(object) * 0.5;
+            Ray3D scattered(hitData.position, Math::Vec3(0, 0, 0));
+            Color attenuation;
+            if (hitData.material && hitData.material->scatter(*this, hitData, attenuation, scattered)) {
+                this->recursionDepthLimit--;
+                scattered.recursionDepthLimit = this->recursionDepthLimit;
+                return attenuation * scattered.color(object);
+            }
+            return {0, 0, 0};
         }
         unit_direction = Math::Vec3(_direction).unitVector();
         a = 0.5 * (unit_direction.y() + 1.0);

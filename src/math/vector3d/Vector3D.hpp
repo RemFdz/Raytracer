@@ -78,6 +78,10 @@ namespace Math {
             return (fabs(_x) < s) && (fabs(_y) < s) && (fabs(_z) < s);
         }
 
+        [[nodiscard]] inline Vector3D reflect(const Vector3D& normal) const {
+            return *this - normal * 2 * this->dot(normal);
+        }
+
     protected:
         double _x = 0;
         double _y = 0;

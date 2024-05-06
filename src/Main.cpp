@@ -14,6 +14,9 @@
 #include "graphics/scene/Scene.hpp"
 #include "models/RenderMode.hpp"
 #include "objects/shapes/sphere/Sphere.hpp"
+#include "graphics/materials/lambertian/Lambertian.hpp"
+#include "graphics/materials/mirror/Mirror.hpp"
+#include <memory>
 
 int main(int argc, char **argv)
 {
@@ -25,10 +28,15 @@ int main(int argc, char **argv)
 
     const int width = 800;
 
-    Rtx::Camera camera(1, 2, Math::Vec3(0, 0, 0), width, Rtx::RenderMode::SFML);
+    Rtx::Camera camera(1, 2, Math::Vec3(0, 0.1, 0.6), width, Rtx::RenderMode::SFML);
     Rtx::Scene scene(camera);
-    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5));
-    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100));
+    Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
+    Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
+
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5, std::make_shared<Rtx::Material::Lambertian>(material)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100, std::make_shared<Rtx::Material::Lambertian>(material)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(-1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
 
     scene.render();
     /// Put the call for generate and display in the core class after
