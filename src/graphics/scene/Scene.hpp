@@ -15,14 +15,20 @@
 
 namespace Rtx {
     class Scene {
-    public:
-        explicit Scene(Camera &camera);
-        ~Scene() = default;
-        void addObject(const std::shared_ptr<IObject3D> &object);
-        void render();
+        public:
+            explicit Scene(Camera &camera);
+            ~Scene() = default;
+            void addObject(const std::shared_ptr<IObject3D> &object);
+            inline std::vector<sf::Uint8> render_sfml() { return this->_camera.render_sfml(this->_objects); };
 
-    private:
-        ObjectList _objects = {};
-        Camera _camera;
+            inline void render_image() { this->_camera.render_image(this->_objects); };
+
+            inline void edit_postion_camera(double x, double y, double z) {
+                _camera.setCameraCenter(x, y, z);
+            }
+
+        private:
+            ObjectList _objects = {};
+            Camera _camera;
     };
 } // namespace Rtx

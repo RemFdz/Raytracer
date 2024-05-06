@@ -30,9 +30,6 @@ namespace Rtx {
         this->_pixels.clear();
         this->_pixels.reserve(_imageWidth * _imageHeight * 4);
 
-        if (_renderMode == RenderMode::SFML)
-            this->_display = std::make_shared<SfmlDisplay>(_imageWidth, _imageHeight);
-
         this->init();
     }
 
@@ -110,17 +107,12 @@ namespace Rtx {
         }
     }
 
-    void Camera::render(ObjectList &objects) {
-        if (_renderMode == RenderMode::SFML) {
-            fillUint8Array(objects);
-            _display->updateTexture(_pixels);
-            while (_display->isOpen()) {
-                _display->clear();
-                _display->handleEvents();
-                _display->display();
-            }
-        } else {
-            generateImage(objects);
-        }
+    void Camera::render_image(ObjectList &objects) {
+        generateImage(objects);
+    }
+
+    std::vector<sf::Uint8> Camera::render_sfml(ObjectList &objects) {
+        fillUint8Array(objects);
+        return _pixels;
     }
 }

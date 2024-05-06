@@ -41,7 +41,13 @@ namespace Rtx {
 
         void fillUint8Array(ObjectList &objects);
 
-        void render(ObjectList &objects);
+        std::vector<sf::Uint8> render_sfml(ObjectList &objects);
+        void render_image(ObjectList &objects);
+
+
+        void setCameraCenter(double x, double y, double z) {
+            _cameraCenter += Math::Vec3(x, y, z);
+        }
 
     private:
         double _focalLength;

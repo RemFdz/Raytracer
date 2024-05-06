@@ -18,6 +18,12 @@ typedef enum {
     DOWN,
     ZOOM_IN,
     ZOOM_OUT,
+    KEY_Z,
+    KEY_S,
+    KEY_Q,
+    KEY_D,
+    KEY_T,
+    KEY_B,
     NONE
 } KeyPressed_e;
 
@@ -48,7 +54,7 @@ class SfmlDisplay {
             _keyPressed = NONE;
         }
 
-        inline KeyPressed_e getKeyPressed() { return _keyPressed;};
+        inline KeyPressed_e getKeyPressed() { return _keyPressed; };
 
     private:
         sf::RenderWindow window;
