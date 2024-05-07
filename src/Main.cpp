@@ -14,6 +14,9 @@
 #include "graphics/scene/Scene.hpp"
 #include "models/RenderMode.hpp"
 #include "objects/shapes/sphere/Sphere.hpp"
+#include "graphics/materials/lambertian/Lambertian.hpp"
+#include "graphics/materials/mirror/Mirror.hpp"
+#include <memory>
 
 int main(int argc, char **argv)
 {

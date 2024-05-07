@@ -11,7 +11,7 @@
 #include <memory>
 
 namespace Rtx {
-    class ObjectList : public IObject3D{
+    class ObjectList : public IObject3D {
     public:
         ObjectList() = default;
 

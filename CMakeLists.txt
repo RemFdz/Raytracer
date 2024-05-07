@@ -27,6 +27,9 @@ add_executable(raytracer ${SOURCES}
         src/objects/objectlist/ObjectList.hpp
         src/utils/Range.hpp
         src/thread/Multi_Thread
-        src/utils/Randomizer.hpp)
+        src/utils/Randomizer.hpp
+        src/graphics/materials/IMaterial.hpp
+        src/graphics/materials/lambertian/Lambertian.cpp
+        src/graphics/materials/mirror/Mirror.hpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)
