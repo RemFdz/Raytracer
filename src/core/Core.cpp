@@ -7,6 +7,9 @@
 
 #include "Core.hpp"
 #include "../graphics/scene/Scene.hpp"
+#include "../graphics/materials/IMaterial.hpp"
+#include "../graphics/materials/lambertian/Lambertian.hpp"
+#include "../graphics/materials/mirror/Mirror.hpp"
 
 bool Core::validateArguments(int argc, char **argv) {
     if (argc != 2 && argc != 3) {
@@ -26,8 +29,12 @@ bool Core::validateArguments(int argc, char **argv) {
 
 void Core::init() {
     Rtx::Scene scene(_camera);
-    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5));
-    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100));
+    Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
+    Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5, std::make_shared<Rtx::Material::Lambertian>(material)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100, std::make_shared<Rtx::Material::Lambertian>(material)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
+    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(-1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
 }
 
 void Core::run() {

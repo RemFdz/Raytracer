@@ -12,6 +12,7 @@
 #include "../camera/Camera.hpp"
 #include "../../objects/IObject3D.hpp"
 #include "../../objects/objectlist/ObjectList.hpp"
+#include "../../graphics/materials/IMaterial.hpp"
 
 namespace Rtx {
     class Scene {

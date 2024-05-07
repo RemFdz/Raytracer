@@ -11,6 +11,7 @@
 #include <fstream>
 #include <string>
 
+#include "../graphics/materials/IMaterial.hpp"
 #include "../display/SfmlDisplay.hpp"
 #include "../graphics/camera/Camera.hpp"
 #include "../graphics/scene/Scene.hpp"
