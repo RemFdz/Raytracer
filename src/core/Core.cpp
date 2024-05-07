@@ -12,7 +12,7 @@
 #include "../graphics/materials/lambertian/Lambertian.hpp"
 #include "../graphics/materials/mirror/Mirror.hpp"
 #include "../objects/shapes/plane/Plane.hpp"
-
+#include "../objects/shapes/Cylinder/Cylinder.hpp"
 
 bool Core::validateArguments(int argc, char **argv) {
     if (argc != 2 && argc != 3) {
@@ -33,13 +33,25 @@ bool Core::validateArguments(int argc, char **argv) {
 void Core::init() {
     Rtx::Scene scene(_camera);
     Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
+    Rtx::Material::Lambertian material3(Math::Vec3(0.0, 0.8, 0.3));
     Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
-    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5, std::make_shared<Rtx::Material::Lambertian>(material)));
-    // _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100, std::make_shared<Rtx::Material::Lambertian>(material)));
-    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
-    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(-1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
+    // _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5, std::make_shared<Rtx::Material::Lambertian>(material)));
+    // // _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100, std::make_shared<Rtx::Material::Lambertian>(material)));
+    // _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
+    // _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(-1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
 
-    _scene.addObject(std::make_shared<Rtx::Plane>(Math::Vec3(1, -0.5, -1), Math::Vec3(0, 1, 0), std::make_shared<Rtx::Material::Lambertian>(material)));
+    _scene.addObject(std::make_shared<Rtx::Plane>(
+        Math::Vec3(1, -0.5, -1),    // Position
+        Math::Vec3(0, 1, 0),        // Axe (pour la direction)
+        std::make_shared<Rtx::Material::Lambertian>(material)
+    ));
+    _scene.addObject(std::make_shared<Rtx::Cylinder>(
+        Math::Vec3(0, -0.5, -2),    // Position
+        Math::Vec3(0, 1, 0),        // Axe (direction)
+        1.0,                        // Rayon
+        0.2,                        // Hauteur
+        std::make_shared<Rtx::Material::Lambertian>(material3)
+    ));
 }
 
 void Core::run() {
