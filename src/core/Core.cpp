@@ -5,11 +5,14 @@
 ** Display class used to render objects in a window using sfml
 */
 
+
 #include "Core.hpp"
 #include "../graphics/scene/Scene.hpp"
 #include "../graphics/materials/IMaterial.hpp"
 #include "../graphics/materials/lambertian/Lambertian.hpp"
 #include "../graphics/materials/mirror/Mirror.hpp"
+#include "../objects/shapes/plane/Plane.hpp"
+
 
 bool Core::validateArguments(int argc, char **argv) {
     if (argc != 2 && argc != 3) {
@@ -31,10 +34,12 @@ void Core::init() {
     Rtx::Scene scene(_camera);
     Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
     Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
-    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5, std::make_shared<Rtx::Material::Lambertian>(material)));
-    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100, std::make_shared<Rtx::Material::Lambertian>(material)));
-    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
-    scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(-1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
+    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, 0, -1), 0.5, std::make_shared<Rtx::Material::Lambertian>(material)));
+    // _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(0, -100.5, -1), 100, std::make_shared<Rtx::Material::Lambertian>(material)));
+    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
+    _scene.addObject(std::make_shared<Rtx::Sphere>(Math::Vec3(-1, 0, -1), 0.5, std::make_shared<Rtx::Material::Mirror>(material2)));
+
+    _scene.addObject(std::make_shared<Rtx::Plane>(Math::Vec3(1, -0.5, -1), Math::Vec3(0, 1, 0), std::make_shared<Rtx::Material::Lambertian>(material)));
 }
 
 void Core::run() {

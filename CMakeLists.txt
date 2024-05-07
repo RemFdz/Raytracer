@@ -15,6 +15,8 @@ add_executable(raytracer ${SOURCES}
         src/graphics/ray/Ray3D.hpp
         src/objects/shapes/sphere/Sphere.hpp
         src/objects/shapes/sphere/Sphere.cpp
+        src/objects/shapes/plane/Plane.hpp
+        src/objects/shapes/plane/Plane.cpp
         src/display/SfmlDisplay.hpp
         src/core/Core.cpp
         src/graphics/color/Color.hpp
