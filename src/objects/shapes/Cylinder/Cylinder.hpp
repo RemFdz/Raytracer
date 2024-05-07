@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** ray_tracer
 ** File description:
-** Cylinder implementation
+** Cylinder
 */
 
 #pragma once

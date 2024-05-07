@@ -51,7 +51,7 @@ namespace Rtx {
 
     private:
         double _aspectRatio = 16 / 9;
-        int _samplesPerPixel = 10;
+        int _samplesPerPixel = 20;
 
         double _focalLength;
         double _viewportHeight;

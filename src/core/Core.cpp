@@ -13,6 +13,7 @@
 #include "../graphics/materials/mirror/Mirror.hpp"
 #include "../objects/shapes/plane/Plane.hpp"
 #include "../objects/shapes/Cylinder/Cylinder.hpp"
+#include "../objects/shapes/Cone/Cone.hpp"
 
 bool Core::validateArguments(int argc, char **argv) {
     if (argc != 2 && argc != 3) {
@@ -45,11 +46,20 @@ void Core::init() {
         Math::Vec3(0, 1, 0),        // Axe (pour la direction)
         std::make_shared<Rtx::Material::Lambertian>(material)
     ));
-    _scene.addObject(std::make_shared<Rtx::Cylinder>(
-        Math::Vec3(0, -0.5, -2),    // Position
+
+    // _scene.addObject(std::make_shared<Rtx::Cylinder>(
+    //     Math::Vec3(0, -0.5, -2),    // Position
+    //     Math::Vec3(0, 1, 0),        // Axe (direction)
+    //     1.0,                        // Rayon
+    //     0.2,                        // Hauteur
+    //     std::make_shared<Rtx::Material::Lambertian>(material3)
+    // ));
+
+    _scene.addObject(std::make_shared<Rtx::Cone>(
+        Math::Vec3(0, 0.5, -2),     // Position
         Math::Vec3(0, 1, 0),        // Axe (direction)
-        1.0,                        // Rayon
-        0.2,                        // Hauteur
+        M_PI / 6,                   // Angle in radians, e.g., 30 degrees
+        1.0,                        // Hauteur
         std::make_shared<Rtx::Material::Lambertian>(material3)
     ));
 }
