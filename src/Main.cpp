@@ -18,6 +18,7 @@
 #include "objects/shapes/sphere/Sphere.hpp"
 #include "graphics/materials/lambertian/Lambertian.hpp"
 #include "graphics/materials/mirror/Mirror.hpp"
+#include "graphics/materials/light/Light.hpp"
 #include <memory>
 
 #include "parsing/Parsing.hpp"
@@ -39,8 +40,10 @@ int main(int argc, char **argv)
 
     Rtx::Camera camera(1, 2, parser.getCamCfg().center, parser.getCamCfg().width, Rtx::RenderMode::SFML);
     Rtx::Scene scene(camera);
+    Rtx::Material::Lambertian materialGreen(Math::Vec3(0.1, 0.8, 0.1));
     Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
     Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
+    Rtx::Material::Light light(Math::Vec3(20, 20, 20));
 
     // TOOD: Need to be generic, this is for testing purposes
     for (auto &sphereCfg : parser.getSpheresCfg()) {

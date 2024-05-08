@@ -28,7 +28,7 @@ namespace Rtx {
 
         Math::Vec3 at(double t);
 
-        Color color(IObject3D &object);
+        Color color(IObject3D &object, Color backgroundColor);
 
         void setOrigin(const Math::Point3 &origin) { _origin = origin; }
         void setDirection(const Math::Vec3 &direction) { _direction = direction; }
@@ -36,6 +36,6 @@ namespace Rtx {
     private:
         Math::Point3 _origin;
         Math::Vec3 _direction;
-        int recursionDepthLimit = 30;
+        int recursionDepthLimit = 40;
     };
 } // namespace Rtx
