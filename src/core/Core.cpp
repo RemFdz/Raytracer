@@ -60,20 +60,6 @@ void Core::init(std::string argv) {
             sphereCfg.radius,
             material);
         _scene->addObject(sphere);
-    this->_display = this->_camera->getDisplay();
-
-    Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
-    Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
-
-    // TOOD: Need to be generic, this is for testing purposes
-    for (auto &sphereCfg : parser.getSpheresCfg()) {
-        if (sphereCfg.materialName == "lambertian") {
-            _scene->addObject(std::make_shared<Rtx::Sphere>(sphereCfg.center, sphereCfg.radius,
-                                                           std::make_shared<Rtx::Material::Lambertian>(material)));
-        } else if (sphereCfg.materialName == "mirror") {
-            _scene->addObject(std::make_shared<Rtx::Sphere>(sphereCfg.center, sphereCfg.radius,
-                                                           std::make_shared<Rtx::Material::Mirror>(material2)));
-        }
     }
 }
 
