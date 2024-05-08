@@ -6,15 +6,13 @@
 */
 
 #pragma once
-#include "../IMaterial.hpp"
+#include "../AMaterial.hpp"
 
 namespace Rtx::Material {
-    class Mirror : public IMaterial {
+    class Mirror : public AMaterial {
     public:
-        explicit Mirror(const Color &color) : _albedoColor(color) {};
+        explicit Mirror(const Color &color) : AMaterial(color) {};
         ~Mirror() override = default;
         bool scatter(const Ray3D &ray, const HitData &hitData, Color &attenuation, Ray3D &scattered) const override;
-    private:
-        Color _albedoColor;
     };
 }

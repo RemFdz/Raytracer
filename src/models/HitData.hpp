@@ -7,6 +7,7 @@
 
 #pragma once
 #include "../math/vector3d/Vector3D.hpp"
+#include "TexCoords.hpp"
 #include <memory>
 
 namespace Rtx {
@@ -17,5 +18,6 @@ namespace Rtx {
         Math::Vec3 position;
         Math::Vec3 normal;
         std::shared_ptr<IMaterial> material = nullptr;
+        TexCoords texCoords;
     };
 } // namespace Rtx

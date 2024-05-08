@@ -12,13 +12,13 @@
 #include "../../models/RenderMode.hpp"
 #include "../../display/SfmlDisplay.hpp"
 #include "../../objects/objectlist/ObjectList.hpp"
-
 #include "memory"
 
-namespace Rtx {
-
+namespace Rtx {;
     class Camera {
     public:
+        Color backgroundColor = Color(0.1, 0.1, 0.1);
+
         Camera(
             Math::Vec3 cameraCenter,
             int imageWidth,
@@ -43,7 +43,7 @@ namespace Rtx {
 
     private:
         double _aspectRatio = 16.0 / 9.0;
-        int _samplesPerPixel = 10;
+        int _samplesPerPixel = 1000;
 
         double fov = 90;
         double _viewportHeight;
