@@ -16,13 +16,13 @@
 namespace Rtx {
     class Scene {
     public:
-        explicit Scene(Camera &camera);
+        explicit Scene(std::shared_ptr<Camera> &camera);
         ~Scene() = default;
         void addObject(const std::shared_ptr<IObject3D> &object);
         void render();
 
     private:
         ObjectList _objects = {};
-        Camera _camera;
+        std::shared_ptr<Camera> _camera;
     };
 } // namespace Rtx

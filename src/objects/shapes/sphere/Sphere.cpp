@@ -6,6 +6,8 @@
 */
 
 #include "Sphere.hpp"
+#include <cstdarg>
+#include <cstring>
 
 namespace Rtx {
     bool Sphere::hit(const Rtx::Ray3D &ray, HitData &hitData, Utils::Range<double> range) {
