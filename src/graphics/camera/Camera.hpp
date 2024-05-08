@@ -43,7 +43,7 @@ namespace Rtx {;
 
     private:
         double _aspectRatio = 16.0 / 9.0;
-        int _samplesPerPixel = 1000;
+        int _samplesPerPixel = 10;
 
         double fov = 90;
         double _viewportHeight;

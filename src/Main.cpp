@@ -38,7 +38,7 @@ int main(int argc, char **argv)
         return 84;
     }
 
-    Rtx::Camera camera(1, 2, parser.getCamCfg().center, parser.getCamCfg().width, Rtx::RenderMode::SFML);
+    Rtx::Camera camera(parser.getCamCfg().center, parser.getCamCfg().width, Rtx::RenderMode::SFML);
     Rtx::Scene scene(camera);
     Rtx::Material::Lambertian materialGreen(Math::Vec3(0.1, 0.8, 0.1));
     Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
