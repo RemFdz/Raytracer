@@ -7,21 +7,23 @@
 
 #include "Parsing.hpp"
 
-int Parsing::showHelp(bool isFromError) {
+int Parsing::Parser::showHelp(bool isFromError) {
     std::cout
-            << "USAGE: ./raytracer <SCENE_FILE>"
+            << "USAGE: ./raytracer <SCENE_FILE> ?<-sfml>"
             << "\n\tSCENE_FILE: scene configuration"
+            << "\n\t-sfml: optional used the specify that this is SFML renderer"
             << std::endl;
     return (isFromError ? 84 : 0);
 }
 
-Math::Vector3D Parsing::structToVec3(libconfig::Setting &settings)
+Math::Vector3D Parsing::Parser::structToVec3(libconfig::Setting &settings)
 {
     double x, y, z;
+
     settings.lookupValue("x", x);
     settings.lookupValue("y", y);
     settings.lookupValue("z", z);
-    return Math::Vector3D(x, y, z);
+    return {x, y, z};
 }
 
 bool Parsing::Parser::processFile() {
@@ -39,7 +41,7 @@ bool Parsing::Parser::processFile() {
     if (!cfg.exists("camera"))
         return false;
     libconfig::Setting &cameraCfg = cfg.lookup("camera");
-    _camCfg.center = Parsing::structToVec3(cameraCfg.lookup("center"));
+    _camCfg.center = Parsing::Parser::structToVec3(cameraCfg.lookup("center"));
     cameraCfg.lookupValue("width", this->_camCfg.width);
     cameraCfg.lookupValue("fov", this->_camCfg.fov);
     cameraCfg.lookupValue("samplePerPixel", this->_camCfg.samplePerPixel);
@@ -50,7 +52,7 @@ bool Parsing::Parser::processFile() {
         for (int i = 0; i < spheresCfg.getLength(); i++) {
             libconfig::Setting &sphere = spheresCfg[i];
             Parsing::SphereCfg sphereCfg;
-            sphereCfg.center = Parsing::structToVec3(sphere.lookup("center"));
+            sphereCfg.center = Parsing::Parser::structToVec3(sphere.lookup("center"));
             sphere.lookupValue("radius", sphereCfg.radius);
             sphere.lookupValue("material", sphereCfg.materialName);
             _spheresCfg.push_back(sphereCfg);

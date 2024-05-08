@@ -17,16 +17,13 @@
 #pragma once
 
 namespace Parsing {
-    int showHelp(bool isFromError);
-
-    Math::Vector3D structToVec3(libconfig::Setting &settings);
-
     class Parser {
     public:
         Parser(const std::string &filePath) : _configFilePath(filePath) {}
         ~Parser() = default;
         bool processFile(void);
-
+        static int showHelp(bool isFromError);
+        static Math::Vector3D structToVec3(libconfig::Setting &settings);
         CamCfg getCamCfg() { return _camCfg; };
         std::list<SphereCfg> getSpheresCfg() { return _spheresCfg; };
         std::string getConfigFilePath() { return _configFilePath; };

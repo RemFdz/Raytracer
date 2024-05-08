@@ -41,6 +41,8 @@ namespace Rtx {;
 
         void inline setFov(double fov) { this->fov = fov; }
 
+        inline std::shared_ptr<SfmlDisplay> getDisplay() {  return _display; }
+
     private:
         double _aspectRatio = 16.0 / 9.0;
         int _samplesPerPixel = 10;

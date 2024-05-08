@@ -8,11 +8,11 @@
 #include "Scene.hpp"
 
 namespace Rtx {
-    Rtx::Scene::Scene(Camera &camera) : _camera(camera) {
+    Rtx::Scene::Scene(std::shared_ptr<Camera> &camera) : _camera(camera) {
     }
 
     void Scene::render() {
-        this->_camera.render(this->_objects);
+        this->_camera->render(this->_objects);
     }
 
     void Scene::addObject(const std::shared_ptr<IObject3D> &object) {

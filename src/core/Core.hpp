@@ -10,17 +10,33 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
 #include "../display/SfmlDisplay.hpp"
+#include "../parsing/Parsing.hpp"
+#include "../core/Core.hpp"
+#include "../graphics/scene/Scene.hpp"
+#include "../models/RenderMode.hpp"
+#include "../objects/shapes/sphere/Sphere.hpp"
+#include "../graphics/materials/lambertian/Lambertian.hpp"
+#include "../graphics/materials/mirror/Mirror.hpp"
+#include "../graphics/materials/light/Light.hpp"
 
 class Core {
     public:
-        Core() {}
+        Core(int argc, char **argv);
 
-        static bool validateArguments(int argc, char **argv);
+        bool validateArguments(int argc, char **argv);
 
-        void run(const std::string& arg);
+        void run();
+
+        void init(std::string argv);
+
+        void moveCamera(KeyPressed_e key);
 
     private:
         static bool isValidConfigPath(const std::string &path);
+        bool _renderSfml = false;
+        std::string _path;
+        std::shared_ptr<Rtx::Camera> _camera;
+        std::shared_ptr<Rtx::Scene> _scene;
+        std::shared_ptr<SfmlDisplay> _display;
 };

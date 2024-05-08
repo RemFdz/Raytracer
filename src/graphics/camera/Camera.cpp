@@ -101,11 +101,6 @@ namespace Rtx {
         if (_renderMode == RenderMode::SFML) {
             fillUint8Array(objects);
             _display->updateTexture(_pixels);
-            while (_display->isOpen()) {
-                _display->clear();
-                _display->handleEvents();
-                _display->display();
-            }
         } else {
             generateImage(objects);
         }
