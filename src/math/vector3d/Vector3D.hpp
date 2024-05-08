@@ -39,6 +39,8 @@ namespace Math {
 
         [[nodiscard]] inline Vector3D operator/(double t) const { return { _x / t, _y / t, _z / t }; }
 
+        inline bool operator!=(const Vector3D& v) const { return _x != v._x || _y != v._y || _z != v._z; }
+
         [[nodiscard]] inline double dot(const Vector3D& v) const { return _x * v._x + _y * v._y + _z * v._z; }
 
         [[nodiscard]] inline Vector3D cross(const Vector3D& v) const {

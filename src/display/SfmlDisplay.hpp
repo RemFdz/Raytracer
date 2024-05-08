@@ -10,6 +10,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include "../math/vector3d/Vector3D.hpp"
 
 typedef enum {
     LEFT,
@@ -40,6 +43,11 @@ class SfmlDisplay {
         inline void updateTexture(std::vector<sf::Uint8> &pixels) {
             texture.update(pixels.data());
             sprite.setTexture(texture, true);
+        }
+
+        Math::Vec3 getMousePosition() {
+            sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+            return Math::Vec3(mousePosition.x, mousePosition.y, 0);
         }
 
         inline void display() {

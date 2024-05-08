@@ -27,7 +27,6 @@ namespace Rtx {
 
         if (_renderMode == RenderMode::SFML)
             this->_display = std::make_shared<SfmlDisplay>(_imageWidth, _imageHeight);
-
         this->init();
     }
 
@@ -51,7 +50,7 @@ namespace Rtx {
         this->_pixelDeltaV = this->_viewportV / _imageHeight;
 
         this->_viewportUpperLeft = _cameraCenter - (w * focalLength) - this->_viewportU / 2 - this->_viewportV
-            / 2;
+                                                                                              / 2;
         this->_pixel00Loc = this->_viewportUpperLeft + (( this->_pixelDeltaU + this->_pixelDeltaV) * 0.5);
     }
 
@@ -81,7 +80,6 @@ namespace Rtx {
 
     void Camera::fillUint8Array(ObjectList &objects) {
         static Utils::Range<double> range(0.000, 0.999);
-
         for (int i = 0; i < _imageHeight; i++) {
             for (int j = 0; j < _imageWidth; j++) {
                 Color pixelColor(0, 0, 0, 255);
@@ -99,10 +97,17 @@ namespace Rtx {
 
     void Camera::render(ObjectList &objects) {
         if (_renderMode == RenderMode::SFML) {
+            this->_pixels.clear();
             fillUint8Array(objects);
             _display->updateTexture(_pixels);
         } else {
             generateImage(objects);
         }
+    }
+
+    void Camera::move(Math::Vec3 translation) {
+        this->_cameraCenter = this->_cameraCenter + translation;
+        this->_lookAt = this->_lookAt + translation;
+        this->init();
     }
 }

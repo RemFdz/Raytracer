@@ -88,4 +88,21 @@ bool Core::isValidConfigPath(const std::string &path) {
 }
 
 void Core::moveCamera(KeyPressed_e key) {
+    switch (key) {
+        case UP:
+            _camera->move(Math::Vec3(0, 0, 1));
+            break;
+        case DOWN:
+            _camera->move(Math::Vec3(0, 0, -1));
+            break;
+        case LEFT:
+            _camera->move(Math::Vec3(-1, 0, 0));
+            break;
+        case RIGHT:
+            _camera->move(Math::Vec3(1, 0, 0));
+            break;
+
+        default:
+            break;
+    }
 }

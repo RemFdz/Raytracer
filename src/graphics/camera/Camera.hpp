@@ -17,7 +17,7 @@
 namespace Rtx {;
     class Camera {
     public:
-        Color backgroundColor = Color(0.1, 0.1, 0.1);
+        Color backgroundColor = Color(0.8, 0.8, 0.8);
 
         Camera(
             Math::Vec3 cameraCenter,
@@ -43,14 +43,16 @@ namespace Rtx {;
 
         inline std::shared_ptr<SfmlDisplay> getDisplay() {  return _display; }
 
+        void move(Math::Vec3 translation);
+
     private:
         double _aspectRatio = 16.0 / 9.0;
-        int _samplesPerPixel = 10;
+        int _samplesPerPixel = 2;
 
         double fov = 90;
         double _viewportHeight;
         double _viewportWidth;
-        Math::Vec3 _cameraCenter;
+        Math::Vec3 _cameraCenter = Math::Vec3(0, 0, 0);
         int _imageWidth = 0;
         int _imageHeight = 0;
 
