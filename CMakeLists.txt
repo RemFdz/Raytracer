@@ -30,6 +30,8 @@ add_executable(raytracer ${SOURCES}
         src/graphics/materials/IMaterial.hpp
         src/graphics/materials/lambertian/Lambertian.cpp
         src/graphics/materials/mirror/Mirror.hpp
-        src/graphics/textures/flatcolor/FlatColor.cpp)
+        src/graphics/textures/flatcolor/FlatColor.cpp
+        src/graphics/materials/light/Light.cpp
+        src/graphics/materials/AMaterial.hpp)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio)
 target_include_directories(raytracer PUBLIC includes)

@@ -15,5 +15,6 @@ namespace Rtx {
     public:
         virtual ~IMaterial() = default;
         virtual bool scatter(const Ray3D &ray, const HitData &hitData, Color &attenuation, Ray3D &scattered) const = 0;
+        [[nodiscard]] virtual Color emitted() const = 0;
     };
 } // namespace Rtx

@@ -62,7 +62,7 @@ namespace Rtx {
         Math::Vec3 direction = pixelSample - _cameraCenter;
         Ray3D ray(_cameraCenter, direction);
 
-        return ray.color(objects);
+        return ray.color(objects, backgroundColor);
     }
 
     void Camera::generateImage(ObjectList &objects) {
@@ -89,7 +89,6 @@ namespace Rtx {
                     pixelColor += castRay(j, i, objects);
                 }
                 pixelColor = pixelColor / _samplesPerPixel;
-                //pixelColor.setLinearToGamma(); < todo :Check if really needed here
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.r()) * 256));
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256));
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256));
