@@ -33,6 +33,8 @@ add_executable(raytracer ${SOURCES}
         src/graphics/textures/flatcolor/FlatColor.cpp
         src/graphics/materials/light/Light.cpp
         src/graphics/materials/AMaterial.hpp
-        src/factories/object_factory/ObjectFactory.cpp)
+        src/factories/object_factory/ObjectFactory.hpp
+        src/factories/material_factory/MaterialFactory.hpp
+)
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio config++)
 target_include_directories(raytracer PUBLIC includes)

@@ -19,6 +19,8 @@
 #include "../graphics/materials/lambertian/Lambertian.hpp"
 #include "../graphics/materials/mirror/Mirror.hpp"
 #include "../graphics/materials/light/Light.hpp"
+#include "../factories/object_factory/ObjectFactory.hpp"
+#include "../factories/material_factory/MaterialFactory.hpp"
 
 class Core {
     public:

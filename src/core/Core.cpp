@@ -36,12 +36,12 @@ void Core::init(std::string argv) {
 
     const std::string configPath(argv);
     Parsing::Parser parser(configPath);
+    Rtx::RenderMode mode;
 
     if (!parser.processFile()) {
         std::cerr << "Error: Parsing failed" << std::endl;
         exit(84);
     }
-    Rtx::RenderMode mode;
 
     _renderSfml ? mode = Rtx::RenderMode::SFML : mode = Rtx::RenderMode::IMAGE;
 
@@ -49,20 +49,17 @@ void Core::init(std::string argv) {
                                                               parser.getCamCfg().width,
                                                               mode));
     this->_scene = std::make_shared<Rtx::Scene>(Rtx::Scene(_camera));
-    this->_display = this->_camera->getDisplay();
-
-    Rtx::Material::Lambertian material(Math::Vec3(0.8, 0.3, 0.3));
-    Rtx::Material::Mirror material2(Math::Vec3(0.8, 0.6, 0.2));
+    this->_display = this->_camera->getDisplay();;
 
     // TOOD: Need to be generic, this is for testing purposes
     for (auto &sphereCfg : parser.getSpheresCfg()) {
-        if (sphereCfg.materialName == "lambertian") {
-            _scene->addObject(std::make_shared<Rtx::Sphere>(sphereCfg.center, sphereCfg.radius,
-                                                           std::make_shared<Rtx::Material::Lambertian>(material)));
-        } else if (sphereCfg.materialName == "mirror") {
-            _scene->addObject(std::make_shared<Rtx::Sphere>(sphereCfg.center, sphereCfg.radius,
-                                                           std::make_shared<Rtx::Material::Mirror>(material2)));
-        }
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
+        auto sphere = Rtx::ObjectFactory<Math::Vec3, double, std::shared_ptr<Rtx::IMaterial>>::createObject(
+            "sphere",
+            sphereCfg.center,
+            sphereCfg.radius,
+            material);
+        _scene->addObject(sphere);
     }
 }
 
