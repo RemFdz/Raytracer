@@ -1,0 +1,38 @@
+name: Build Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up CMake
+        uses: martinlindhe/cmake-action@v1
+        with:
+          cmake-version: '3.26'
+
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+          cmake --build .
+
+      - name: Check compilation status
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "Compilation successful"
+          else
+            echo "Compilation failed"
+            exit 1
+          fi
