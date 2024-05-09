@@ -53,13 +53,47 @@ void Core::init(std::string argv) {
 
     // TOOD: Need to be generic, this is for testing purposes
     for (auto &sphereCfg : parser.getSpheresCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.material.name, sphereCfg.material.color);
         auto sphere = Rtx::ObjectFactory::createObject(
             "sphere",
             sphereCfg.center,
             sphereCfg.radius,
             material);
         _scene->addObject(sphere);
+    }
+
+    for (auto &coneCfg : parser.getConesCfg()) {
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.material.name, coneCfg.material.color);
+        auto cone = Rtx::ObjectFactory::createObject(
+            "cone",
+            coneCfg.apex,
+            coneCfg.axis,
+            coneCfg.angle,
+            coneCfg.height,
+            material);
+        _scene->addObject(cone);
+    }
+
+    for (auto &cylinderCfg : parser.getCylindersCfg()) {
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.material.name, cylinderCfg.material.color);
+        auto cylinder = Rtx::ObjectFactory::createObject(
+            "cylinder",
+            cylinderCfg.center,
+            cylinderCfg.axis,
+            cylinderCfg.radius,
+            cylinderCfg.height,
+            material);
+        _scene->addObject(cylinder);
+    }
+
+    for (auto &planeCfg : parser.getPlanesCfg()) {
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.material.name, planeCfg.material.color);
+        auto plane = Rtx::ObjectFactory::createObject(
+            "plane",
+            planeCfg.center,
+            planeCfg.norm,
+            material);
+        _scene->addObject(plane);
     }
 }
 
