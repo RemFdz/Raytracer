@@ -23,6 +23,7 @@ namespace Parsing {
         int samplePerPixel;
         double fov;
         Math::Vector3D center;
+        Math::Vector3D lookAt;
     };
 
     struct SphereCfg {
