@@ -26,6 +26,22 @@ Math::Vector3D Parsing::Parser::structToVec3(libconfig::Setting &settings)
     return {x, y, z};
 }
 
+Rtx::Color Parsing::Parser::cfgToColor(libconfig::Setting &colorSettings) {
+    double r, g, b;
+
+    colorSettings.lookupValue("r", r);
+    colorSettings.lookupValue("g", g);
+    colorSettings.lookupValue("b", b);
+    return Rtx::Color(r, g, b);
+}
+
+Parsing::MaterialCfg Parsing::Parser::cfgToMaterial(libconfig::Setting &materialSettings) {
+    Parsing::MaterialCfg materialCfg;
+    materialSettings.lookupValue("name", materialCfg.name);
+    materialCfg.color = cfgToColor(materialSettings.lookup("color"));
+    return materialCfg;
+}
+
 bool Parsing::Parser::processFile() {
     libconfig::Config cfg;
 

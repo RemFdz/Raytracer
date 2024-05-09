@@ -23,7 +23,11 @@ namespace Parsing {
         ~Parser() = default;
         bool processFile(void);
         static int showHelp(bool isFromError);
+
         static Math::Vector3D structToVec3(libconfig::Setting &settings);
+        static MaterialCfg cfgToMaterial(libconfig::Setting &materialSettings);
+        static Rtx::Color cfgToColor(libconfig::Setting &colorSettings);
+
         CamCfg getCamCfg() { return _camCfg; };
         std::list<SphereCfg> getSpheresCfg() { return _spheresCfg; };
         std::list<ConeCfg> getConesCfg() { return _conesCfg; };
