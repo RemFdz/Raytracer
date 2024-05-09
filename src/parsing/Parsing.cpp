@@ -69,8 +69,8 @@ bool Parsing::Parser::processFile() {
             libconfig::Setting &sphere = spheresCfg[i];
             Parsing::SphereCfg sphereCfg;
             sphereCfg.center = Parsing::Parser::structToVec3(sphere.lookup("center"));
+            sphereCfg.material = Parsing::Parser::cfgToMaterial(sphere.lookup("material"));
             sphere.lookupValue("radius", sphereCfg.radius);
-            sphere.lookupValue("material", sphereCfg.materialName);
             _spheresCfg.push_back(sphereCfg);
         }
     }
@@ -84,9 +84,9 @@ bool Parsing::Parser::processFile() {
             Parsing::ConeCfg coneCfg;
             coneCfg.apex = Parsing::Parser::structToVec3(cone.lookup("apex"));
             coneCfg.axis = Parsing::Parser::structToVec3(cone.lookup("axis"));
+            coneCfg.material = Parsing::Parser::cfgToMaterial(cone.lookup("material"));
             cone.lookupValue("angle", coneCfg.angle);
             cone.lookupValue("height", coneCfg.height);
-            cone.lookupValue("material", coneCfg.materialName);
             _conesCfg.push_back(coneCfg);
         }
     }
@@ -100,9 +100,9 @@ bool Parsing::Parser::processFile() {
             Parsing::CylinderCfg cylinderCfg;
             cylinderCfg.center = Parsing::Parser::structToVec3(cylinder.lookup("center"));
             cylinderCfg.axis = Parsing::Parser::structToVec3(cylinder.lookup("axis"));
+            cylinderCfg.material = Parsing::Parser::cfgToMaterial(cylinder.lookup("material"));
             cylinder.lookupValue("radius", cylinderCfg.radius);
             cylinder.lookupValue("height", cylinderCfg.height);
-            cylinder.lookupValue("material", cylinderCfg.materialName);
             _cylindersCfg.push_back(cylinderCfg);
         }
     }
@@ -116,7 +116,7 @@ bool Parsing::Parser::processFile() {
             Parsing::PlaneCfg planeCfg;
             planeCfg.center = Parsing::Parser::structToVec3(plane.lookup("center"));
             planeCfg.norm = Parsing::Parser::structToVec3(plane.lookup("norm"));
-            plane.lookupValue("material", planeCfg.materialName);
+            planeCfg.material = Parsing::Parser::cfgToMaterial(plane.lookup("material"));
             _planesCfg.push_back(planeCfg);
         }
     }

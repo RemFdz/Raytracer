@@ -53,7 +53,7 @@ void Core::init(std::string argv) {
 
     // TOOD: Need to be generic, this is for testing purposes
     for (auto &sphereCfg : parser.getSpheresCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.material.name, sphereCfg.material.color);
         auto sphere = Rtx::ObjectFactory::createObject(
             "sphere",
             sphereCfg.center,
@@ -63,8 +63,8 @@ void Core::init(std::string argv) {
     }
 
     for (auto &coneCfg : parser.getConesCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
-        auto cone = Rtx::ObjectFactory<Math::Vec3, Math::Vec3, double, double, std::shared_ptr<Rtx::IMaterial>>::createObject(
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.material.name, coneCfg.material.color);
+        auto cone = Rtx::ObjectFactory::createObject(
             "cone",
             coneCfg.apex,
             coneCfg.axis,
