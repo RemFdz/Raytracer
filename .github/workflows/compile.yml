@@ -29,4 +29,8 @@ jobs:
           cmake --build .
 
       - name: Check if build succeeded
-      run: exit $((${PIPESTATUS[0]}))
+        run: |
+          if [ $? -ne 0 ]; then
+            echo "Build failed, preventing push"
+            exit 1
+          fi
