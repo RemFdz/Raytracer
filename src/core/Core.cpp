@@ -75,8 +75,8 @@ void Core::init(std::string argv) {
     }
 
     for (auto &cylinderCfg : parser.getCylindersCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
-        auto cylinder = Rtx::ObjectFactory<Math::Vec3, Math::Vec3, double, double, std::shared_ptr<Rtx::IMaterial>>::createObject(
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.material.name, cylinderCfg.material.color);
+        auto cylinder = Rtx::ObjectFactory::createObject(
             "cylinder",
             cylinderCfg.center,
             cylinderCfg.axis,
@@ -87,8 +87,8 @@ void Core::init(std::string argv) {
     }
 
     for (auto &planeCfg : parser.getPlanesCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
-        auto plane = Rtx::ObjectFactory<Math::Vec3, Math::Vec3, std::shared_ptr<Rtx::IMaterial>>::createObject(
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.material.name, planeCfg.material.color);
+        auto plane = Rtx::ObjectFactory::createObject(
             "plane",
             planeCfg.center,
             planeCfg.norm,
