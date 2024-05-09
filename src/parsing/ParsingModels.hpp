@@ -24,4 +24,26 @@ namespace Parsing {
         std::string materialName;
         double radius;
     };
+
+    struct ConeCfg {
+        Math::Vector3D apex;
+        Math::Vector3D axis;
+        double angle;
+        double height;
+        std::string materialName;
+    };
+
+    struct CylinderCfg {
+        Math::Vector3D center;
+        Math::Vector3D axis;
+        double radius;
+        double height;
+        std::string materialName;
+    };
+
+    struct PlaneCfg {
+        Math::Vector3D center;
+        Math::Vector3D norm;
+        std::string materialName;
+    };
 }

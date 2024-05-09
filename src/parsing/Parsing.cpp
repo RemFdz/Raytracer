@@ -58,5 +58,52 @@ bool Parsing::Parser::processFile() {
             _spheresCfg.push_back(sphereCfg);
         }
     }
+
+    // Parsing of the cones
+    // Apex (vec3), Axis (vec3), Angle (double), Height (double), MaterialName
+    if (cfg.exists("cones")) {
+        libconfig::Setting &conesCfg = cfg.lookup("cones");
+        for (int i = 0; i < conesCfg.getLength(); i++) {
+            libconfig::Setting &cone = conesCfg[i];
+            Parsing::ConeCfg coneCfg;
+            coneCfg.apex = Parsing::Parser::structToVec3(cone.lookup("apex"));
+            coneCfg.axis = Parsing::Parser::structToVec3(cone.lookup("axis"));
+            cone.lookupValue("angle", coneCfg.angle);
+            cone.lookupValue("height", coneCfg.height);
+            cone.lookupValue("material", coneCfg.materialName);
+            _conesCfg.push_back(coneCfg);
+        }
+    }
+
+    // Parsing of the cylinders
+    // Center (vec3), Axis (vec3), Radius (double), Height (double), MaterialName
+    if (cfg.exists("cylinders")) {
+        libconfig::Setting &cylindersCfg = cfg.lookup("cylinders");
+        for (int i = 0; i < cylindersCfg.getLength(); i++) {
+            libconfig::Setting &cylinder = cylindersCfg[i];
+            Parsing::CylinderCfg cylinderCfg;
+            cylinderCfg.center = Parsing::Parser::structToVec3(cylinder.lookup("center"));
+            cylinderCfg.axis = Parsing::Parser::structToVec3(cylinder.lookup("axis"));
+            cylinder.lookupValue("radius", cylinderCfg.radius);
+            cylinder.lookupValue("height", cylinderCfg.height);
+            cylinder.lookupValue("material", cylinderCfg.materialName);
+            _cylindersCfg.push_back(cylinderCfg);
+        }
+    }
+
+    // Parsing of the planes
+    // Center (vec3), Norm (vec3), MaterialName
+    if (cfg.exists("planes")) {
+        libconfig::Setting &planesCfg = cfg.lookup("planes");
+        for (int i = 0; i < planesCfg.getLength(); i++) {
+            libconfig::Setting &plane = planesCfg[i];
+            Parsing::PlaneCfg planeCfg;
+            planeCfg.center = Parsing::Parser::structToVec3(plane.lookup("center"));
+            planeCfg.norm = Parsing::Parser::structToVec3(plane.lookup("norm"));
+            plane.lookupValue("material", planeCfg.materialName);
+            _planesCfg.push_back(planeCfg);
+        }
+    }
+
     return true;
 }

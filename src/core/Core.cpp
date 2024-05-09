@@ -61,6 +61,40 @@ void Core::init(std::string argv) {
             material);
         _scene->addObject(sphere);
     }
+
+    for (auto &coneCfg : parser.getConesCfg()) {
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
+        auto cone = Rtx::ObjectFactory<Math::Vec3, Math::Vec3, double, double, std::shared_ptr<Rtx::IMaterial>>::createObject(
+            "cone",
+            coneCfg.apex,
+            coneCfg.axis,
+            coneCfg.angle,
+            coneCfg.height,
+            material);
+        _scene->addObject(cone);
+    }
+
+    for (auto &cylinderCfg : parser.getCylindersCfg()) {
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
+        auto cylinder = Rtx::ObjectFactory<Math::Vec3, Math::Vec3, double, double, std::shared_ptr<Rtx::IMaterial>>::createObject(
+            "cylinder",
+            cylinderCfg.center,
+            cylinderCfg.axis,
+            cylinderCfg.radius,
+            cylinderCfg.height,
+            material);
+        _scene->addObject(cylinder);
+    }
+
+    for (auto &planeCfg : parser.getPlanesCfg()) {
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.materialName, Math::Vec3(0.8, 0.3, 0.3));
+        auto plane = Rtx::ObjectFactory<Math::Vec3, Math::Vec3, std::shared_ptr<Rtx::IMaterial>>::createObject(
+            "plane",
+            planeCfg.center,
+            planeCfg.norm,
+            material);
+        _scene->addObject(plane);
+    }
 }
 
 void Core::run() {
