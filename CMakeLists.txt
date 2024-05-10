@@ -10,6 +10,10 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 set(EXECUTABLE_OUTPUT_PATH ../.)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -Werror")
+if (DCMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address -fsanitize-address-use-after-scope")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} -g -fsanitize=address -fsanitize-address-use-after-scope")
+endif()
 add_executable(raytracer ${SOURCES}
         src/objects/IObject3D.hpp
         src/graphics/ray/Ray3D.hpp
