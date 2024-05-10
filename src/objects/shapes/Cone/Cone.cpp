@@ -16,9 +16,9 @@ bool Rtx::Cone::hit(const Ray3D& ray, HitData& hitData, Utils::Range<double> ran
     Math::Vector3D perpendicular = direction - axis * directionDotAxis;
     Math::Vector3D p = apexToOrigin - axis * apexToOrigin.dot(axis);
 
-    double a = perpendicular.lengthSquared() - sinAngle * directionDotAxis * directionDotAxis;
-    double b = 2.0 * (perpendicular.dot(p) - sinAngle * directionDotAxis * apexToOrigin.dot(axis));
-    double c = p.lengthSquared() - sinAngle * apexToOrigin.dot(axis) * apexToOrigin.dot(axis);
+    double a = perpendicular.lengthSquared() - sinAngle * sinAngle * directionDotAxis * directionDotAxis;
+    double b = 2.0 * (perpendicular.dot(p) - sinAngle * sinAngle * directionDotAxis * apexToOrigin.dot(axis));
+    double c = p.lengthSquared() - sinAngle * sinAngle * apexToOrigin.dot(axis) * apexToOrigin.dot(axis);
 
     double discriminant = b * b - 4 * a * c;
     if (discriminant < 0) {

@@ -42,20 +42,23 @@ void Core::init(std::string argv) {
         std::cerr << "Error: Parsing failed" << std::endl;
         exit(84);
     }
-
     _renderSfml ? mode = Rtx::RenderMode::SFML : mode = Rtx::RenderMode::IMAGE;
-
     this->_camera = std::make_shared<Rtx::Camera>(Rtx::Camera(parser.getCamCfg().center,
                                                               parser.getCamCfg().width,
-                                                              mode));
+                                                              mode,
+                                                              parser.getCamCfg().lookAt,
+                                                              parser.getCamCfg().fov,
+                                                              parser.getCamCfg().samplePerPixel));
     this->_scene = std::make_shared<Rtx::Scene>(Rtx::Scene(_camera));
     this->_display = this->_camera->getDisplay();;
 
-    // TOOD: Need to be generic, this is for testing purposes
     for (auto &sphereCfg : parser.getSpheresCfg()) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.material.name, sphereCfg.material.color);
-        auto sphere = Rtx::ObjectFactory::createObject(
-            "sphere",
+        if (material == nullptr) {
+            std::cerr << "Error: Material not found" << std::endl;
+            exit(84);
+        }
+        auto sphere = Rtx::ObjectFactory::createSphere(
             sphereCfg.center,
             sphereCfg.radius,
             material);
@@ -64,8 +67,11 @@ void Core::init(std::string argv) {
 
     for (auto &coneCfg : parser.getConesCfg()) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.material.name, coneCfg.material.color);
-        auto cone = Rtx::ObjectFactory::createObject(
-            "cone",
+        if (material == nullptr) {
+            std::cerr << "Error: Material not found" << std::endl;
+            exit(84);
+        }
+        auto cone = Rtx::ObjectFactory::createCone(
             coneCfg.apex,
             coneCfg.axis,
             coneCfg.angle,
@@ -76,8 +82,11 @@ void Core::init(std::string argv) {
 
     for (auto &cylinderCfg : parser.getCylindersCfg()) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.material.name, cylinderCfg.material.color);
-        auto cylinder = Rtx::ObjectFactory::createObject(
-            "cylinder",
+        if (material == nullptr) {
+            std::cerr << "Error: Material not found" << std::endl;
+            exit(84);
+        }
+        auto cylinder = Rtx::ObjectFactory::createCylinder(
             cylinderCfg.center,
             cylinderCfg.axis,
             cylinderCfg.radius,
@@ -88,8 +97,11 @@ void Core::init(std::string argv) {
 
     for (auto &planeCfg : parser.getPlanesCfg()) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.material.name, planeCfg.material.color);
-        auto plane = Rtx::ObjectFactory::createObject(
-            "plane",
+        if (material == nullptr) {
+            std::cerr << "Error: Material not found" << std::endl;
+            exit(84);
+        }
+        auto plane = Rtx::ObjectFactory::createPlane(
             planeCfg.center,
             planeCfg.norm,
             material);

@@ -35,6 +35,7 @@ add_executable(raytracer ${SOURCES}
         src/graphics/materials/AMaterial.hpp
         src/factories/object_factory/ObjectFactory.hpp
         src/factories/material_factory/MaterialFactory.hpp
+        src/objects/shapes/Cylinder/Cylinder.cpp
 )
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio config++)
 target_include_directories(raytracer PUBLIC includes)

@@ -9,6 +9,7 @@
 #include "../../graphics/materials/IMaterial.hpp"
 #include "../../graphics/materials/lambertian/Lambertian.hpp"
 #include "../../graphics/materials/mirror/Mirror.hpp"
+#include "../../graphics/materials/light/Light.hpp"
 
 namespace Rtx {
     class MaterialFactory {
@@ -22,6 +23,9 @@ namespace Rtx {
             }
             if (type == "mirror") {
                 return std::make_shared<Rtx::Material::Mirror>(color);
+            }
+            if (type == "light") {
+                return std::make_shared<Rtx::Material::Light>(color);
             }
             return nullptr;
         };

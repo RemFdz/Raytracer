@@ -13,8 +13,14 @@ namespace Rtx {
     Camera::Camera(
         Math::Vec3 cameraCenter,
         int imageWidth,
-        RenderMode renderMode
+        RenderMode renderMode,
+        Math::Vec3 lookAt,
+        double fov,
+        double samplesPerPixel
     ) {
+        this->_lookAt = lookAt;
+        this->fov = fov;
+        this->_samplesPerPixel = samplesPerPixel;
         this->_cameraCenter = cameraCenter;
         this->_imageWidth = imageWidth;
         this->_renderMode = renderMode;

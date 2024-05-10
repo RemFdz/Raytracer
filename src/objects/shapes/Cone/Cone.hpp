@@ -26,7 +26,6 @@ namespace Rtx {
                 sinAngle = std::sin(angle);
                 sinAngle *= sinAngle;
             }
-
             virtual bool hit(const Ray3D& ray, HitData& hitData, Utils::Range<double> range) override;
 
         private:

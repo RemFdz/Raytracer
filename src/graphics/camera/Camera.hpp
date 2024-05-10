@@ -17,12 +17,15 @@
 namespace Rtx {;
     class Camera {
     public:
-        Color backgroundColor = Color(0.8, 0.8, 0.8);
+        Color backgroundColor = Color(0.3, 0.3, 0.3);
 
         Camera(
             Math::Vec3 cameraCenter,
             int imageWidth,
-            RenderMode renderMode
+            RenderMode renderMode,
+            Math::Vec3 lookAt,
+            double fov,
+            double samplesPerPixel
         );
 
         void init();
