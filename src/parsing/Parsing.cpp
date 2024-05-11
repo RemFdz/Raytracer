@@ -62,6 +62,8 @@ bool Parsing::Parser::processFile() {
                 cameraCfg.lookup("center"));
         _camCfg.lookAt = Parsing::Parser::structToVec3(
                 cameraCfg.lookup("lookAt"));
+        _camCfg.ambientLightColor = Parsing::Parser::cfgToColor(
+                cameraCfg.lookup("ambientLightColor"));
         cameraCfg.lookupValue("width", this->_camCfg.width);
         cameraCfg.lookupValue("fov", this->_camCfg.fov);
         cameraCfg.lookupValue("samplePerPixel", this->_camCfg.samplePerPixel);

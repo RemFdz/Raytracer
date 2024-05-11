@@ -24,6 +24,7 @@ namespace Parsing {
         double fov = 90.0;
         Math::Vector3D center = { 0.0, 0.0, 0.0 };
         Math::Vector3D lookAt = { 1.0, 1.0, 1.0 };
+        Rtx::Color ambientLightColor = { 0.0, 0.0, 0.0 };
     };
 
     struct SphereCfg {
