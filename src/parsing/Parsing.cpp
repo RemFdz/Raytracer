@@ -39,6 +39,7 @@ Parsing::MaterialCfg Parsing::Parser::cfgToMaterial(libconfig::Setting &material
     Parsing::MaterialCfg materialCfg;
     materialSettings.lookupValue("name", materialCfg.name);
     materialCfg.color = cfgToColor(materialSettings.lookup("color"));
+    materialSettings.lookupValue("refractionIndex", materialCfg.refractionIndex);
     return materialCfg;
 }
 

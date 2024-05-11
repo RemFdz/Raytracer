@@ -16,6 +16,7 @@ namespace Parsing {
     struct MaterialCfg {
         std::string name = "lambertian";
         Rtx::Color color = { 0, 0, 0 };
+        double refractionIndex = 1.0;
     };
 
     struct CamCfg {

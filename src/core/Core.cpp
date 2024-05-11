@@ -49,11 +49,19 @@ void Core::init(std::string argv) {
                                                               parser.getCamCfg().lookAt,
                                                               parser.getCamCfg().fov,
                                                               parser.getCamCfg().samplePerPixel));
+    this->_camera->backgroundColor = parser.getCamCfg().ambientLightColor;
     this->_scene = std::make_shared<Rtx::Scene>(Rtx::Scene(_camera));
     this->_display = this->_camera->getDisplay();;
+    double refractionIndex = 1.0;
 
     for (auto &sphereCfg : parser.getSpheresCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.material.name, sphereCfg.material.color);
+
+        if (sphereCfg.material.name == "glass") {
+            refractionIndex = sphereCfg.material.refractionIndex;
+        }
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.material.name,
+                                                                                        sphereCfg.material.color,
+                                                                                        refractionIndex);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
             std::exit(84);
@@ -66,7 +74,12 @@ void Core::init(std::string argv) {
     }
 
     for (auto &coneCfg : parser.getConesCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.material.name, coneCfg.material.color);
+        if (coneCfg.material.name == "glass") {
+            refractionIndex = coneCfg.material.refractionIndex;
+        }
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.material.name,
+                                                                                        coneCfg.material.color,
+                                                                                        refractionIndex);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
             std::exit(84);
@@ -81,7 +94,12 @@ void Core::init(std::string argv) {
     }
 
     for (auto &cylinderCfg : parser.getCylindersCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.material.name, cylinderCfg.material.color);
+        if (cylinderCfg.material.name == "glass") {
+            refractionIndex = cylinderCfg.material.refractionIndex;
+        }
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.material.name,
+                                                                                        cylinderCfg.material.color,
+                                                                                        refractionIndex);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
             std::exit(84);
@@ -96,7 +114,12 @@ void Core::init(std::string argv) {
     }
 
     for (auto &planeCfg : parser.getPlanesCfg()) {
-        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.material.name, planeCfg.material.color);
+        if (planeCfg.material.name == "glass") {
+            refractionIndex = planeCfg.material.refractionIndex;
+        }
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.material.name,
+                                                                                        planeCfg.material.color,
+                                                                                        refractionIndex);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
             std::exit(84);
