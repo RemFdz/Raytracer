@@ -33,6 +33,7 @@ namespace Parsing {
         std::list<ConeCfg> getConesCfg() { return _conesCfg; };
         std::list<CylinderCfg> getCylindersCfg() { return _cylindersCfg; };
         std::list<PlaneCfg> getPlanesCfg() { return _planesCfg; };
+        std::list<CubeCfg> getCubesCfg() { return _cubesCfg; };
         std::string getConfigFilePath() { return _configFilePath; };
     private:
         CamCfg _camCfg = {};
@@ -40,6 +41,7 @@ namespace Parsing {
         std::list<ConeCfg> _conesCfg = {};
         std::list<CylinderCfg> _cylindersCfg = {};
         std::list<PlaneCfg> _planesCfg = {};
+        std::list<CubeCfg> _cubesCfg = {};
         std::string _configFilePath;
     };
 }

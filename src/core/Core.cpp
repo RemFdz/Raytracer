@@ -107,6 +107,19 @@ void Core::init(std::string argv) {
             material);
         _scene->addObject(plane);
     }
+
+    for (auto &cubeCfg : parser.getCubesCfg()) {
+        std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cubeCfg.material.name, cubeCfg.material.color);
+        if (material == nullptr) {
+            std::cerr << "Error: Material not found" << std::endl;
+            exit(84);
+        }
+        auto cube = Rtx::ObjectFactory::createCube(
+            cubeCfg.center,
+            cubeCfg.edgeLength,
+            material);
+        _scene->addObject(cube);
+    }
 }
 
 void Core::run() {

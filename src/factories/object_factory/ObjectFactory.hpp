@@ -13,6 +13,7 @@
 #include "../../objects/shapes/Cone/Cone.hpp"
 #include "../../objects/shapes/plane/Plane.hpp"
 #include "../../objects/shapes/Cylinder/Cylinder.hpp"
+#include "../../objects/shapes/Cube/Cube.hpp"
 
 namespace Rtx {
     class ObjectFactory {
@@ -39,6 +40,13 @@ namespace Rtx {
                                                       const std::shared_ptr<IMaterial> &material)
         {
             return std::make_shared<Rtx::Plane>(pos, norm, material);
+        };
+
+        static inline std::shared_ptr<IObject3D> createCube(const Math::Point3D& center,
+                                                            double edgeLength,
+                                                            const std::shared_ptr<IMaterial> &material)
+        {
+            return std::make_shared<Rtx::Cube>(center, edgeLength, material);
         };
 
         static inline std::shared_ptr<IObject3D> createCylinder(const Math::Vec3& center,
