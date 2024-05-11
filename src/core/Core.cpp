@@ -39,7 +39,7 @@ void Core::init(std::string argv) {
     Rtx::RenderMode mode;
 
     if (!parser.processFile()) {
-        std::cerr << "Error: Parsing failed" << std::endl;
+        std::cerr << "Error: Parsing failed. Please refers to the documentation to check the syntax of the config file." << std::endl;
         std::exit(84);
     }
     _renderSfml ? mode = Rtx::RenderMode::SFML : mode = Rtx::RenderMode::IMAGE;
