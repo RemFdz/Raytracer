@@ -40,6 +40,12 @@ namespace Parsing {
         MaterialCfg material;
     };
 
+    struct CubeCfg {
+        Math::Vector3D center;
+        double edgeLength;
+        MaterialCfg material;
+    };
+
     struct CylinderCfg {
         Math::Vector3D center;
         Math::Vector3D axis;

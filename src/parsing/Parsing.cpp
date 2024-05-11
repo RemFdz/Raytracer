@@ -122,5 +122,17 @@ bool Parsing::Parser::processFile() {
         }
     }
 
+    if (cfg.exists("cubes")) {
+        libconfig::Setting &cubesCfg = cfg.lookup("cubes");
+        for (int i = 0; i < cubesCfg.getLength(); i++) {
+            libconfig::Setting &cube = cubesCfg[i];
+            Parsing::CubeCfg cubeCfg;
+            cubeCfg.center = Parsing::Parser::structToVec3(cube.lookup("center"));
+            cubeCfg.material = Parsing::Parser::cfgToMaterial(cube.lookup("material"));
+            cube.lookupValue("edgeLength", cubeCfg.edgeLength);
+            _cubesCfg.push_back(cubeCfg);
+        }
+    }
+
     return true;
 }
