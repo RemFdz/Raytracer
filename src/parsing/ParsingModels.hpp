@@ -14,16 +14,16 @@
 
 namespace Parsing {
     struct MaterialCfg {
-        std::string name;
-        Rtx::Color color;
+        std::string name = "lambertian";
+        Rtx::Color color = { 0, 0, 0 };
     };
 
     struct CamCfg {
-        int width;
-        int samplePerPixel;
-        double fov;
-        Math::Vector3D center;
-        Math::Vector3D lookAt;
+        int width = 800;
+        int samplePerPixel = 200;
+        double fov = 90.0;
+        Math::Vector3D center = { 0.0, 0.0, 0.0 };
+        Math::Vector3D lookAt = { 1.0, 1.0, 1.0 };
     };
 
     struct SphereCfg {
