@@ -19,5 +19,6 @@ namespace Rtx {
         Math::Vec3 normal;
         std::shared_ptr<IMaterial> material = nullptr;
         TexCoords texCoords;
+        bool isFrontFace = true;
     };
 } // namespace Rtx

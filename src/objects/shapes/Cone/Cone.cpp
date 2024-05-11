@@ -41,6 +41,7 @@ bool Rtx::Cone::hit(const Ray3D& ray, HitData& hitData, Utils::Range<double> ran
                 hitData.position = point;
                 hitData.normal = calculateNormal(point, heightAtHit);
                 hitData.material = _material;
+                hitData.isFrontFace = ray.getDirection().dot(hitData.normal) < 0;
             }
         }
     }

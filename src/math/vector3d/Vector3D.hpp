@@ -74,7 +74,7 @@ namespace Math {
         [[nodiscard]] static Vector3D randomInHemisphere(const Vector3D& normal);
 
         [[nodiscard]] inline bool nearZero() const {
-            const auto s = 1e-8;
+            const double s = 1e-8;
             return (fabs(_x) < s) && (fabs(_y) < s) && (fabs(_z) < s);
         }
 
@@ -94,6 +94,8 @@ namespace Math {
             if (i == 1) return _y;
             return _z;
         }
+
+        Vector3D refract(Vector3D normal, double refractiveIndexRatio);
 
     protected:
         double _x = 0;

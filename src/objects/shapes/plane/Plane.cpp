@@ -17,6 +17,7 @@ bool Rtx::Plane::hit(const Ray3D& ray, HitData& hitData, Utils::Range<double> ra
             hitData.position = ray.at(t);
             hitData.normal = normal;
             hitData.material = _material;
+            hitData.isFrontFace = ray.getDirection().dot(normal) < 0;
             return true;
         }
     }

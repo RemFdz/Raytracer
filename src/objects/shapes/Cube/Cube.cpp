@@ -45,5 +45,6 @@ bool Rtx::Cube::hit(const Ray3D& ray, HitData& hitData, Utils::Range<double> ran
 
     hitData.normal = normal;
     hitData.material = _material;
+    hitData.isFrontFace = ray.getDirection().dot(hitData.normal) < 0;
     return true;
 }

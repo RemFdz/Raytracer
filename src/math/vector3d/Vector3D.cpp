@@ -25,4 +25,13 @@ namespace Math {
             return p;
         }
     }
+
+    Vector3D Vector3D::refract(Vector3D normal, double refractiveIndexRatio) {
+        Vector3D uv = *this;
+        double cosTheta = fmin(-uv.dot(normal), 1.0);
+        Vector3D rOutPerp = (uv + normal * cosTheta) * refractiveIndexRatio;
+        Vector3D rOutParallel = normal * -sqrt(fabs(1.0 - rOutPerp.lengthSquared()));
+
+        return rOutPerp + rOutParallel;
+    }
 }

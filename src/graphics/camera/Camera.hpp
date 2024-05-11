@@ -17,7 +17,7 @@
 namespace Rtx {;
     class Camera {
     public:
-        Color backgroundColor = Color(0.3, 0.3, 0.3);
+        Color backgroundColor = Color(0.8, 0.8, 0.8);
 
         Camera(
             Math::Vec3 cameraCenter,

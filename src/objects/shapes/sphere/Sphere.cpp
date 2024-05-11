@@ -36,6 +36,7 @@ namespace Rtx {
         hitData.position = ray.at(root);
         hitData.normal = isFrontFace ? outwardNormal : -outwardNormal;
         hitData.material = _material;
+        hitData.isFrontFace = isFrontFace;
         return true;
     }
 }

@@ -27,8 +27,4 @@ int main(int argc, char **argv)
 {
     Core core(argc, argv);
     core.run();
-
-    /// Put the call for generate and display in the core class after
-    //Core core;
-    //core.run(argv[1]);
 }
