@@ -10,7 +10,7 @@
 Core::Core(int argc, char **argv) {
     if (!validateArguments(argc, argv)) {
         Parsing::Parser::showHelp(true);
-        exit(84);
+        std::exit(84);
     }
     init(argv[1]);
 }
@@ -40,7 +40,7 @@ void Core::init(std::string argv) {
 
     if (!parser.processFile()) {
         std::cerr << "Error: Parsing failed" << std::endl;
-        exit(84);
+        std::exit(84);
     }
     _renderSfml ? mode = Rtx::RenderMode::SFML : mode = Rtx::RenderMode::IMAGE;
     this->_camera = std::make_shared<Rtx::Camera>(Rtx::Camera(parser.getCamCfg().center,
@@ -56,7 +56,7 @@ void Core::init(std::string argv) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(sphereCfg.material.name, sphereCfg.material.color);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
-            exit(84);
+            std::exit(84);
         }
         auto sphere = Rtx::ObjectFactory::createSphere(
             sphereCfg.center,
@@ -69,7 +69,7 @@ void Core::init(std::string argv) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(coneCfg.material.name, coneCfg.material.color);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
-            exit(84);
+            std::exit(84);
         }
         auto cone = Rtx::ObjectFactory::createCone(
             coneCfg.apex,
@@ -84,7 +84,7 @@ void Core::init(std::string argv) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(cylinderCfg.material.name, cylinderCfg.material.color);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
-            exit(84);
+            std::exit(84);
         }
         auto cylinder = Rtx::ObjectFactory::createCylinder(
             cylinderCfg.center,
@@ -99,7 +99,7 @@ void Core::init(std::string argv) {
         std::shared_ptr<Rtx::IMaterial> material = Rtx::MaterialFactory::createMaterial(planeCfg.material.name, planeCfg.material.color);
         if (material == nullptr) {
             std::cerr << "Error: Material not found" << std::endl;
-            exit(84);
+            std::exit(84);
         }
         auto plane = Rtx::ObjectFactory::createPlane(
             planeCfg.center,

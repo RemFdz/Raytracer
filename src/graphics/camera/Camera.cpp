@@ -75,9 +75,12 @@ namespace Rtx {
 
         std::cout << "P3\n" << _imageWidth << ' ' << _imageHeight << "\n255\n";
         for (int j = 0; j < _imageHeight; j++) {
-            std::clog << "\rScanlines remaining: " << (_imageHeight - j) << ' ' << std::flush;
+            std::clog << "\rwidth lines remaining: " << (_imageHeight - j) << " \n" << std::flush;
             for (int i = 0; i < _imageWidth; i++) {
-                pixelColor = castRay(i, j, objects);
+                for (int s = 0; s < _samplesPerPixel; s++) {
+                    pixelColor += castRay(i, j, objects);
+                }
+                pixelColor = pixelColor / _samplesPerPixel;
                 pixelColor.writeColor(std::cout);
             }
         }
@@ -96,7 +99,7 @@ namespace Rtx {
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.r()) * 256));
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256));
                 _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256));
-                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.a() * 255.99));
+                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.a()));
             }
         }
     }
