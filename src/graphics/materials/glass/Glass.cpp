@@ -13,14 +13,19 @@ bool Rtx::Material::Glass::scatter(const Rtx::Ray3D &ray, const Rtx::HitData &hi
     Math::Vector3D direction;
     double refractionRatio = hitData.isFrontFace ? (1.0 / this->_refractionIndex) : this->_refractionIndex;
     Math::Vector3D unitDirection = ray.getDirection().unitVector();
+
+    // Recalcul de la direction du rayon par rapport à la normale de la surface de collision
+    Math::Vector3D recalculatedDirection = unitDirection - hitData.normal * (2.0 * unitDirection.dot(hitData.normal));
+
     double cosTheta = fmin(hitData.normal.dot(-unitDirection), 1.0);
     double sinTheta = sqrt(1.0 - cosTheta * cosTheta);
     bool canRefract = refractionRatio * sinTheta <= 1.0;
 
     if (canRefract || schlick(cosTheta, refractionRatio) > Utils::Randomizer<double>::getRandom())
-        direction = unitDirection.refract(hitData.normal, refractionRatio);
+        direction = recalculatedDirection.refract(hitData.normal, refractionRatio);
     else
-        direction = unitDirection.reflect(hitData.normal);
+        direction = recalculatedDirection.reflect(hitData.normal);
+
     scattered = Rtx::Ray3D(hitData.position, direction);
     return true;
 }

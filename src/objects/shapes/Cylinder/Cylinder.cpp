@@ -36,9 +36,10 @@ bool Rtx::Cylinder::hit(const Ray3D& ray, HitData& hitData, Utils::Range<double>
                 hitSomething = true;
                 hitData.distanceFromOrigin = t;
                 hitData.position = point;
-                hitData.normal = (point - (baseCenter + axis * heightAtHit)).unitVector();
                 hitData.material = _material;
-                hitData.isFrontFace = ray.getDirection().dot(hitData.normal) < 0;
+                Math::Vector3D outward_normal = (point - baseCenter - axis * heightAtHit).unitVector();
+                hitData.isFrontFace = ray.getDirection().dot(outward_normal) < 0;
+               hitData.normal =  hitData.isFrontFace ? outward_normal : -outward_normal;
             }
         }
     }
