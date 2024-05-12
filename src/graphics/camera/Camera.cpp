@@ -156,7 +156,8 @@ namespace Rtx {
                 pixels[(i * width + j) * 4 + 1] = static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256);
                 pixels[(i * width + j) * 4 + 2] = static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256);
                 pixels[(i * width + j) * 4 + 3] = static_cast<sf::Uint8>(pixelColor.a());
-                display->updateTexture(pixels);
+                if (mode != 1)
+                    display->updateTexture(pixels);
             }
         }
         Camera::threadFinished++;
