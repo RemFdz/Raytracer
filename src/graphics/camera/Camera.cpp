@@ -8,6 +8,8 @@
 #include "Camera.hpp"
 #include "../../utils/Randomizer.hpp"
 #include "../../math/matrix3d/Matrix3D.hpp"
+#include <thread>
+#include <functional>
 
 namespace Rtx {
     Camera::Camera(
@@ -71,37 +73,36 @@ namespace Rtx {
     }
 
     void Camera::generateImage(ObjectList &objects) {
-        Color pixelColor;
-
+        fillUint8Array(objects);
         std::cout << "P3\n" << _imageWidth << ' ' << _imageHeight << "\n255\n";
-        for (int j = 0; j < _imageHeight; j++) {
-            std::clog << "\rwidth lines remaining: " << (_imageHeight - j) << " \n" << std::flush;
-            for (int i = 0; i < _imageWidth; i++) {
-                for (int s = 0; s < _samplesPerPixel; s++) {
-                    pixelColor += castRay(i, j, objects);
-                }
-                pixelColor = pixelColor / _samplesPerPixel;
-                pixelColor.writeColor(std::cout);
-            }
+        for (int i = 0; _pixels.size() > i; i += 4) {
+            Color pixelColor(_pixels[i] / 256.0, _pixels[i + 1] / 256.0, _pixels[i + 2] / 256.0, _pixels[i + 3]);
+            pixelColor.writeColor(std::cout);
         }
-        std::clog << "\rDone.\n";
     }
 
     void Camera::fillUint8Array(ObjectList &objects) {
-        static Utils::Range<double> range(0.000, 0.999);
-        for (int i = 0; i < _imageHeight; i++) {
-            for (int j = 0; j < _imageWidth; j++) {
-                Color pixelColor(0, 0, 0, 255);
-                for (int s = 0; s < _samplesPerPixel; s++) {
-                    pixelColor += castRay(j, i, objects);
-                }
-                pixelColor = pixelColor / _samplesPerPixel;
-                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.r()) * 256));
-                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256));
-                _pixels.push_back(static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256));
-                _pixels.push_back(static_cast<sf::Uint8>(pixelColor.a()));
-            }
+        const int numThreads = std::thread::hardware_concurrency();
+        const int rowsPerThread = _imageHeight / numThreads;
+        std::vector<std::thread> threads;
+        std::vector<sf::Uint8> pixels(_imageWidth * _imageHeight * 4);
+
+        for (int t = 0; t < numThreads - 1; ++t) {
+            int startRow = t * rowsPerThread;
+            int endRow = (t + 1) * rowsPerThread;
+            threads.emplace_back(std::bind(
+                &Camera::fillPixelsThread, this, startRow,endRow, _imageWidth, _samplesPerPixel, std::ref(objects),
+                std::ref(pixels)));
         }
+        int startRow = (numThreads - 1) * rowsPerThread;
+        int endRow = _imageHeight;
+
+        threads.emplace_back(std::bind(
+            &Camera::fillPixelsThread, this, startRow, endRow, _imageWidth, _samplesPerPixel, std::ref(objects), std::ref(pixels)));
+        for (auto& thread : threads) {
+            thread.join();
+        }
+        _pixels.assign(pixels.begin(), pixels.end());
     }
 
     void Camera::render(ObjectList &objects) {
@@ -118,5 +119,23 @@ namespace Rtx {
         this->_cameraCenter = this->_cameraCenter + translation;
         this->_lookAt = this->_lookAt + translation;
         this->init();
+    }
+
+    void Camera::fillPixelsThread(int startRow, int endRow, int width, int samplesPerPixel, ObjectList &objects,
+                                  std::vector<sf::Uint8> &pixels) {
+        static Utils::Range<double> range(0.000, 0.999);
+        for (int i = startRow; i < endRow; ++i) {
+            for (int j = 0; j < width; ++j) {
+                Color pixelColor(0, 0, 0, 255);
+                for (int s = 0; s < samplesPerPixel; ++s) {
+                    pixelColor += castRay(j, i, objects);
+                }
+                pixelColor = pixelColor / samplesPerPixel;
+                pixels[(i * width + j) * 4] = static_cast<sf::Uint8>(range.clamp(pixelColor.r()) * 256);
+                pixels[(i * width + j) * 4 + 1] = static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256);
+                pixels[(i * width + j) * 4 + 2] = static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256);
+                pixels[(i * width + j) * 4 + 3] = static_cast<sf::Uint8>(pixelColor.a());
+            }
+        }
     }
 }

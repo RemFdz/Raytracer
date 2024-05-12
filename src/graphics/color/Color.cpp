@@ -10,7 +10,6 @@
 
 namespace Rtx {
     void Color::writeColor(std::ostream &out) {
-        setLinearToGamma();
         double r = _x;
         double g = _y;
         double b = _z;
@@ -20,11 +19,5 @@ namespace Rtx {
         int bByte = static_cast<int>(256 * range.clamp(b));
 
         out << rByte << ' ' << gByte << ' ' << bByte << '\n';
-    }
-
-    void Color::setLinearToGamma() {
-        (_x > 0) ? _x = sqrt(_x) : _x = 0;
-        (_y > 0) ? _y = sqrt(_y) : _y = 0;
-        (_z > 0) ? _z = sqrt(_z) : _z = 0;
     }
 }

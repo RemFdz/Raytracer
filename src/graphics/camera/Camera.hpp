@@ -57,6 +57,14 @@ namespace Rtx {;
         void fillUint8Array(ObjectList &objects);
 
         /**
+        * @brief Fill the pixels of the image with the color of the objects for a thread
+        * @param startRow The start row of the image
+        * @param endRow The end row of the image
+        **/
+        void fillPixelsThread(int startRow, int endRow, int width, int samplesPerPixel, ObjectList& objects,
+                              std::vector<sf::Uint8>& pixels);
+
+        /**
         * @brief Render the image depending on rendermode (generateImage if IMAGE, fillUint8Array if SFML)
         **/
         void render(ObjectList &objects);

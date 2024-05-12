@@ -51,12 +51,6 @@ namespace Rtx {
         }
 
         /**
-        * @brief Convert the color representation from linear to gamma-corrected space.
-        * @details This function adjusts the color values to account for gamma correction.
-        **/
-        void setLinearToGamma(void);
-
-        /**
         * @brief Convert the color representation from gamma-corrected to linear space.
         * @details This function adjusts the color values to account for gamma correction.
         **/
