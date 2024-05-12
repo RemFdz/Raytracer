@@ -8,6 +8,12 @@
 #pragma once
 
 namespace Rtx {
+    /**
+    * @brief RenderMode enum
+    * @details Enum for the render mode
+    * @var RenderMode::SFML (sfml window)
+    * @var RenderMode::IMAGE (image file generation)
+    **/
     enum RenderMode {
         SFML,
         IMAGE

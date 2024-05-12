@@ -12,6 +12,13 @@
 
 namespace Math {
 
+    /**
+    * @brief Vector3D class
+    * @details Class for 3D vectors
+    * @var _x x coordinate
+    * @var _y y coordinate
+    * @var _z z coordinate
+    **/
     class Vector3D {
     public:
         Vector3D() = default;
@@ -69,10 +76,16 @@ namespace Math {
         [[nodiscard]] static inline Vector3D randomUnitVector() { return randomInUnitSphere().unitVector(); }
 
 
+        /**
+        * @brief Generate a random vector in a unit sphere
+        * @return Vector3D
+        **/
         [[nodiscard]] static Vector3D randomInUnitSphere();
 
-        [[nodiscard]] static Vector3D randomInHemisphere(const Vector3D& normal);
-
+        /**
+        * @brief Check if the vector is near zero
+        * @return bool true if the vector is near zero
+        **/
         [[nodiscard]] inline bool nearZero() const {
             const double s = 1e-8;
             return (fabs(_x) < s) && (fabs(_y) < s) && (fabs(_z) < s);

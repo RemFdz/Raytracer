@@ -11,6 +11,12 @@
 
 namespace Math {
 
+    /**
+    * @brief Matrix3D class
+    * @details Class for 3D matrices
+    * @var elements 3x3 matrix elements
+    * @var columns 3x3 matrix columns
+    **/
     class Matrix3D {
     public:
         Matrix3D() {

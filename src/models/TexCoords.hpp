@@ -8,6 +8,9 @@
 #pragma once
 
 namespace Rtx {
+    /**
+    * @brief Texture coordinates model
+    **/
     struct TexCoords {
         double u = 0.0;
         double v = 0.0;

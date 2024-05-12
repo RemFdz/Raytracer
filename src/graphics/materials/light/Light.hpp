@@ -10,6 +10,10 @@
 #include "../AMaterial.hpp"
 
 namespace Rtx::Material {
+    /**
+     * @brief Light material
+     * @details Light material
+     */
     class Light : public AMaterial {
     public:
         explicit Light(const Color &color) : AMaterial(color) {};

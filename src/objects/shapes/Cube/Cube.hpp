@@ -13,6 +13,9 @@
 
 namespace Rtx {
 
+    /**
+    * @brief Cube shape
+    * **/
     class Cube : public IObject3D {
     public:
         Cube(const Math::Point3D& center, double edgeLength, const std::shared_ptr<IMaterial> &material)

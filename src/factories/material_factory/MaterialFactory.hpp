@@ -13,26 +13,22 @@
 #include "../../graphics/materials/glass/Glass.hpp"
 
 namespace Rtx {
+    /**
+    * @brief Material factory
+    * @details Factory class to create materials
+    **/
     class MaterialFactory {
     public:
         MaterialFactory() = default;
         ~MaterialFactory() = default;
+
+        /**
+        * @brief Create a material
+        * @param type The type of the material
+        * @param color The color of the material
+        * @param refractiveIndex The refractive index of the material
+        **/
         static std::shared_ptr<IMaterial> createMaterial(const std::string& type, Color color, double refractiveIndex
-        = 1.0/1.50)
-        {
-            if (type == "lambertian") {
-                return std::make_shared<Rtx::Material::Lambertian>(color);
-            }
-            if (type == "mirror") {
-                return std::make_shared<Rtx::Material::Mirror>(color);
-            }
-            if (type == "light") {
-                return std::make_shared<Rtx::Material::Light>(color);
-            }
-            if (type == "glass") {
-                return std::make_shared<Rtx::Material::Glass>(color, refractiveIndex);
-            }
-            return nullptr;
-        };
+        = 1.0/1.50);
     };
 }

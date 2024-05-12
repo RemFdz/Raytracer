@@ -39,6 +39,7 @@ add_executable(raytracer ${SOURCES}
         src/objects/shapes/Cube/Cube.cpp
         src/objects/shapes/Cube/Cube.hpp
         src/graphics/materials/glass/Glass.cpp
+        src/factories/material_factory/MaterialFactory.cpp
 )
 target_link_libraries(raytracer sfml-graphics sfml-window sfml-system sfml-audio config++)
 target_include_directories(raytracer PUBLIC includes)

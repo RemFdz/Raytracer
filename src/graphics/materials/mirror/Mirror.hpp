@@ -9,6 +9,10 @@
 #include "../AMaterial.hpp"
 
 namespace Rtx::Material {
+    /**
+     * @brief Mirror material
+     * @details Mirror material
+     */
     class Mirror : public AMaterial {
     public:
         explicit Mirror(const Color &color) : AMaterial(color) {};
