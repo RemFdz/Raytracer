@@ -6,12 +6,12 @@
 */
 
 #include "Camera.hpp"
-#include "../../utils/Randomizer.hpp"
-#include "../../math/matrix3d/Matrix3D.hpp"
 #include <thread>
 #include <functional>
 
 namespace Rtx {
+    std::atomic<int> Camera::totalLinesProcessed(0);
+    std::mutex Camera::totalLinesMutex;
     Camera::Camera(
         Math::Vec3 cameraCenter,
         int imageWidth,
@@ -124,7 +124,14 @@ namespace Rtx {
     void Camera::fillPixelsThread(int startRow, int endRow, int width, int samplesPerPixel, ObjectList &objects,
                                   std::vector<sf::Uint8> &pixels) {
         static Utils::Range<double> range(0.000, 0.999);
+        double completionPercentage = 0.0;
+
         for (int i = startRow; i < endRow; ++i) {
+            Camera::totalLinesMutex.lock();
+            Camera::totalLinesProcessed++;
+            completionPercentage = static_cast<double>(Camera::totalLinesProcessed) / _imageHeight * 100;
+            std::clog << "Completion: " << completionPercentage << "%" << std::endl;
+            Camera::totalLinesMutex.unlock();
             for (int j = 0; j < width; ++j) {
                 Color pixelColor(0, 0, 0, 255);
                 for (int s = 0; s < samplesPerPixel; ++s) {

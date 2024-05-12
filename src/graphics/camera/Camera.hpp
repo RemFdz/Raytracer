@@ -6,6 +6,8 @@
 */
 
 #pragma once
+
+#include <atomic>
 #include "../../math/vector3d/Vector3D.hpp"
 #include "../ray/Ray3D.hpp"
 #include "../../objects/shapes/sphere/Sphere.hpp"
@@ -21,6 +23,9 @@ namespace Rtx {;
     * **/
     class Camera {
     public:
+        static std::mutex totalLinesMutex;
+        static std::atomic<int> totalLinesProcessed;
+
         Color backgroundColor = Color(0.8, 0.8, 0.8);
 
         Camera(
