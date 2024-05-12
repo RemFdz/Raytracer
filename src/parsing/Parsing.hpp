@@ -5,8 +5,8 @@
 ** Parsing systems
 */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include <iostream>
 #include <libconfig.h++>
 #include <string>
@@ -17,15 +17,46 @@
 #pragma once
 
 namespace Parsing {
+    /**
+    * @brief Class to parse the config file
+    **/
     class Parser {
     public:
         Parser(const std::string &filePath) : _configFilePath(filePath) {}
         ~Parser() = default;
+
+        /**
+        * @brief Process the config file
+        * @return true if the file was processed successfully, false otherwise
+        **/
         bool processFile(void);
+
+        /**
+        * @brief Show the help message
+        * @param isFromError true if the help message is shown because of an error, false otherwise
+        * @return 84 if the help message is shown because of an error, 0 otherwise
+        **/
         static int showHelp(bool isFromError);
 
+        /**
+        * @brief Convert a libconfig setting to a Vector3D
+        * @param settings the libconfig setting
+        * @return the Vector3D
+        **/
         static Math::Vector3D structToVec3(libconfig::Setting &settings);
+
+        /**
+        * @brief Convert a libconfig setting to a Material cfg struct
+        * @param materialSettings the libconfig setting
+        * @return the Material cfg
+        */
         static MaterialCfg cfgToMaterial(libconfig::Setting &materialSettings);
+
+        /**
+        * @brief Convert a libconfig setting to a Color
+        * @param colorSettings the libconfig setting
+        * @return the Color
+        */
         static Rtx::Color cfgToColor(libconfig::Setting &colorSettings);
 
         CamCfg getCamCfg() { return _camCfg; };

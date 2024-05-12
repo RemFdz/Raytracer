@@ -13,6 +13,9 @@
 
 namespace Rtx {
 
+    /**
+    * @brief Plane shape
+    **/
     class Plane : public IObject3D {
     public:
         Plane(const Math::Point3D& pos, const Math::Vector3D& norm, const std::shared_ptr<IMaterial> &material)

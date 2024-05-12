@@ -19,6 +19,9 @@
 
 namespace Rtx {
 
+    /**
+    * @brief Cone shape
+    **/
     class Cone : public IObject3D {
         public:
             Cone(const Math::Vector3D& apex, const Math::Vector3D& axis, double angle, double height, const std::shared_ptr<IMaterial>& material)

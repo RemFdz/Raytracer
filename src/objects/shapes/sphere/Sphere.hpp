@@ -11,6 +11,9 @@
 #include "../../../graphics/ray/Ray3D.hpp"
 
 namespace Rtx {
+    /**
+    * @brief Sphere shape
+    **/
     class Sphere : public Rtx::IObject3D {
     public:
         Sphere(Math::Vec3 center, double radius, const std::shared_ptr<IMaterial> &material) : _center(center), _radius

@@ -13,6 +13,9 @@
 
 namespace Rtx {
 
+    /**
+    * @brief Cylinder shape
+    **/
     class Cylinder : public IObject3D {
     public:
         Cylinder(const Math::Point3D& baseCenter, const Math::Vector3D& axis, double radius, double height, const std::shared_ptr<IMaterial> &material)

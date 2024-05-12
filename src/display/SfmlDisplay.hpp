@@ -14,6 +14,10 @@
 #include <SFML/Window/Mouse.hpp>
 #include "../math/vector3d/Vector3D.hpp"
 
+/**
+* @brief Enum used to represent the key pressed by the user
+* @details Enum used to represent the key pressed by the user
+**/
 typedef enum {
     LEFT,
     RIGHT,
@@ -24,6 +28,10 @@ typedef enum {
     NONE
 } KeyPressed_e;
 
+/**
+* @brief Class used to display the rendered image
+* @details Class used to display the rendered image
+**/
 class SfmlDisplay {
     public:
         SfmlDisplay(int width, int height) :
@@ -36,15 +44,26 @@ class SfmlDisplay {
 
         inline bool isOpen() const { return window.isOpen(); }
 
+        /**
+        * @brief Handle the events of the window
+        **/
         void handleEvents();
 
         inline void clear(const sf::Color& color = sf::Color::Black) { window.clear(color); }
 
+        /**
+        * @brief Update the texture with the given pixels
+        * @param pixels The pixels to update the texture with
+        **/
         inline void updateTexture(std::vector<sf::Uint8> &pixels) {
             texture.update(pixels.data());
             sprite.setTexture(texture, true);
         }
 
+        /**
+        * @brief Get the mouse position
+        * @return Vector3D The mouse position
+        **/
         Math::Vec3 getMousePosition() {
             sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
             return Math::Vec3(mousePosition.x, mousePosition.y, 0);

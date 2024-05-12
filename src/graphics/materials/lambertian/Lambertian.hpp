@@ -9,6 +9,10 @@
 #include "../AMaterial.hpp"
 
 namespace Rtx::Material {
+    /**
+     * @brief Lambertian material
+     * @details Lambertian material
+     */
     class Lambertian : public AMaterial {
     public:
         explicit Lambertian(const Color &color) : AMaterial(color) {};

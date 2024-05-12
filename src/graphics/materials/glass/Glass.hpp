@@ -9,6 +9,10 @@
 #include "../AMaterial.hpp"
 
 namespace Rtx::Material {
+    /**
+     * @brief Glass material
+     * @details Glass material
+     */
     class Glass : public AMaterial {
     public:
         explicit Glass(const Color &color, double refractionIndex) : AMaterial(color), _refractionIndex(refractionIndex){};
@@ -17,6 +21,13 @@ namespace Rtx::Material {
     private:
         double _refractionIndex;
 
+        /**
+        * @brief Schlick approximation
+        * @details Schlick approximation used to calculate the reflectance of the material
+        * @param cosine The cosine
+        * @param refractionIndex The refraction index
+        * @return The schlick approximation
+        **/
         double schlick(double cosine, double refractionIndex) const;
     };
 }
