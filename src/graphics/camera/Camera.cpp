@@ -12,6 +12,8 @@
 namespace Rtx {
     std::atomic<int> Camera::totalLinesProcessed(0);
     std::mutex Camera::totalLinesMutex;
+    std::atomic<int> Camera::threadFinished(0);
+
     Camera::Camera(
         Math::Vec3 cameraCenter,
         int imageWidth,
@@ -86,20 +88,29 @@ namespace Rtx {
         const int rowsPerThread = _imageHeight / numThreads;
         std::vector<std::thread> threads;
         std::vector<sf::Uint8> pixels(_imageWidth * _imageHeight * 4);
+        int mode = this->_renderMode == RenderMode::SFML ? 0 : 1;
 
         for (int t = 0; t < numThreads - 1; ++t) {
             int startRow = t * rowsPerThread;
             int endRow = (t + 1) * rowsPerThread;
             threads.emplace_back(std::bind(
                 &Camera::fillPixelsThread, this, startRow,endRow, _imageWidth, _samplesPerPixel, std::ref(objects),
-                std::ref(pixels)));
+                std::ref(pixels), std::ref(_display), mode));
         }
         int startRow = (numThreads - 1) * rowsPerThread;
         int endRow = _imageHeight;
 
         threads.emplace_back(std::bind(
-            &Camera::fillPixelsThread, this, startRow, endRow, _imageWidth, _samplesPerPixel, std::ref(objects), std::ref(pixels)));
+            &Camera::fillPixelsThread, this, startRow, endRow, _imageWidth, _samplesPerPixel, std::ref(objects), std::ref(pixels)
+            , std::ref(_display), mode));
         for (auto& thread : threads) {
+            while (threadFinished < numThreads - 1) {
+                if (_renderMode == RenderMode::SFML && _display->isOpen()) {
+                    _display->clear();
+                    _display->display();
+                }
+            }
+
             thread.join();
         }
         _pixels.assign(pixels.begin(), pixels.end());
@@ -122,7 +133,9 @@ namespace Rtx {
     }
 
     void Camera::fillPixelsThread(int startRow, int endRow, int width, int samplesPerPixel, ObjectList &objects,
-                                  std::vector<sf::Uint8> &pixels) {
+                                  std::vector<sf::Uint8> &pixels,
+                                  std::shared_ptr<SfmlDisplay> &display,
+                                  int mode) {
         static Utils::Range<double> range(0.000, 0.999);
         double completionPercentage = 0.0;
 
@@ -130,7 +143,8 @@ namespace Rtx {
             Camera::totalLinesMutex.lock();
             Camera::totalLinesProcessed++;
             completionPercentage = static_cast<double>(Camera::totalLinesProcessed) / _imageHeight * 100;
-            std::clog << "Completion: " << completionPercentage << "%" << std::endl;
+            if (mode == 1)
+                std::clog << "Completion: " << completionPercentage << "%" << std::endl;
             Camera::totalLinesMutex.unlock();
             for (int j = 0; j < width; ++j) {
                 Color pixelColor(0, 0, 0, 255);
@@ -142,7 +156,9 @@ namespace Rtx {
                 pixels[(i * width + j) * 4 + 1] = static_cast<sf::Uint8>(range.clamp(pixelColor.g()) * 256);
                 pixels[(i * width + j) * 4 + 2] = static_cast<sf::Uint8>(range.clamp(pixelColor.b()) * 256);
                 pixels[(i * width + j) * 4 + 3] = static_cast<sf::Uint8>(pixelColor.a());
+                display->updateTexture(pixels);
             }
         }
+        Camera::threadFinished++;
     }
 }

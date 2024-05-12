@@ -25,6 +25,7 @@ namespace Rtx {;
     public:
         static std::mutex totalLinesMutex;
         static std::atomic<int> totalLinesProcessed;
+        static std::atomic<int> threadFinished;
 
         Color backgroundColor = Color(0.8, 0.8, 0.8);
 
@@ -67,7 +68,7 @@ namespace Rtx {;
         * @param endRow The end row of the image
         **/
         void fillPixelsThread(int startRow, int endRow, int width, int samplesPerPixel, ObjectList& objects,
-                              std::vector<sf::Uint8>& pixels);
+                              std::vector<sf::Uint8>& pixels, std::shared_ptr<SfmlDisplay>& display, int mode);
 
         /**
         * @brief Render the image depending on rendermode (generateImage if IMAGE, fillUint8Array if SFML)
