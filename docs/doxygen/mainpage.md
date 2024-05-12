@@ -1,3 +1,4 @@
+*\mainpage Raytracer Documentation
 # Raytracer Epitech
 
 Welcome to the documentation of the Raytracer Epitech. This project is an implementation of a graphics rendering engine capable of generating realistic 3D images from scene descriptions.
